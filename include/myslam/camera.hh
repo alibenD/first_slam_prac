@@ -6,7 +6,7 @@
   * @version: v0.0.1
   * @author: aliben.develop@gmail.com
   * @create_date: 2018-07-31 20:49:07
-  * @last_modified_date: 2018-07-31 20:39:09
+  * @last_modified_date: 2018-08-01 09:01:29
   * @brief: Declaration of Camera class
   */
 
@@ -14,17 +14,21 @@
 #include <myslam/common.hh>
 
 // Declaration
-namespace myslam
-{
-///**
-// * @addtogroup Sensor
-// * @brief Sensor module including all sensors slam will use
-// * @{
-// */
 
 /**
- * @brief A class for camera, which includes interior parameter of a
- *  camera and utilities of a camera
+ * @brief This is a namespace myslam
+ * @details HAHAHAHAHAH
+ */
+namespace myslam
+{
+/**
+ * @defgroup Sensor
+ * @brief Sensor module including all sensors slam will use
+ */   // END of group Sensor
+
+/**
+ * @ingroup Sensor
+ * @brief A class for camera entities
  */
 class Camera
 {
@@ -51,9 +55,9 @@ class Camera
                                  const Sophus::SE3& T_camera_world);
 
     /**
-     * @brief A transformation of coordinate from  to world
+     * @brief A transformation of coordinate from world to pixel
      * @param[IN] point_world The coordinate of this point in the world frame.
-     * @param[IN] T_world_camera The transformation(Lie Algebra) from camera to world.
+     * @param[IN] T_camera_world The transformation(Lie Algebra) from camera to world.
      * @retval coor_point_pixel The coordinate of this point in pixel
      */
     Eigen::Vector2d world2pixel(const Eigen::Vector3d& point_world,
@@ -70,7 +74,7 @@ class Camera
 
     /**
      * @brief A transformation of coordinate from camera to pixel
-     * @param[IN] point_world The coordinate of this point in the world frame.
+     * @param[IN] point_camera The coordinate of this point in the world frame.
      * @retval coor_point_pixel The coordinate of this point in pixel
      */
     Eigen::Vector2d camera2pixel(const Eigen::Vector3d& point_camera);
@@ -79,7 +83,7 @@ class Camera
     /**
      * @brief A transformation of coordinate from pixel to camera
      * @param[IN] point_pixel The coordinate of this point in the pixel frame.
-     * @param[IN] depth
+     * @param[IN] depth a
      * @retval coor_point_camera The coordinate of this point in camera
      */
     Eigen::Vector3d pixel2camera(const Eigen::Vector2d& point_pixel,
@@ -89,6 +93,7 @@ class Camera
      * @brief A transformation of coordinate from pixel to world
      * @param[IN] point_pixel The coordinate of this point in the pixel frame.
      * @param[IN] T_camera_world The transformation(Lie Algebra) from worl to camera.
+     * @param[IN] depth a
      * @retval coor_point_world The coordinate of this point in world
      */
     Eigen::Vector3d pixel2world(const Eigen::Vector2d& point_pixel,
@@ -107,8 +112,5 @@ class Camera
     float depth_scale_; /*!< Scale of depth */
 }
 
-///**
-// * @}
-// */   // END of group Sensor
 }   // END of namespace myslam
 #endif // __CAMERA_HH__
