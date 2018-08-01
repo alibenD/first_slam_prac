@@ -7,13 +7,16 @@
   * @version: v0.0.1
   * @author: aliben.develop@gmail.com
   * @create_date: 2018-08-01 10:08:31
-  * @last_modified_date: 2018-08-01 10:19:43
+  * @last_modified_date: 2018-08-01 16:37:40
   * @brief: TODO
   * @details: TODO
   *-----------------------------------------------*/
 
 // Header include
 #include <myslam/common.hh>
+#include <myslam/map.hh>
+#include <myslam/frame.hh>
+#include <myslam/mappoint.hh>
 
 // Declaration
 namespace myslam

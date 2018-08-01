@@ -7,7 +7,7 @@
   * @version: v0.0.1
   * @author: aliben.develop@gmail.com
   * @create_date: 2018-08-01 09:47:05
-  * @last_modified_date: 2018-08-01 10:12:15
+  * @last_modified_date: 2018-08-01 17:07:13
   * @brief: TODO
   * @details: TODO
   *-----------------------------------------------*/
@@ -25,6 +25,7 @@ namespace myslam
   class MapPoint
   {
     public:
+      typedef std::shared_ptr<MapPoint> Ptr;
       MapPoint() = default;
       MapPoint(long id,
                Eigen::Vector3d position,
@@ -32,8 +33,24 @@ namespace myslam
       virtual ~MapPoint() = default;
       static MapPoint::Ptr createMapPoint();
 
-    public:
-      typedef std::shared_ptr<MapPoint> Ptr;
+      // Get methods
+      inline unsigned long get_id() const
+      { return this->id_; }
+
+      inline const Eigen::Vector3d& get_position() const
+      { return this->position_; }
+
+      inline const Eigen::Vector3d& get_norm_direction() const
+      { return this->norm_direction_; }
+
+      inline const cv::Mat& get_descriptor_() const
+      { return this->descriptor_; }
+
+      inline int get_ovserved_times() const
+      { return this->observed_times_; }
+
+      inline int get_correct_times() const
+      { return this->correct_times_; }
 
     private:
       unsigned long id_;

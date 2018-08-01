@@ -6,7 +6,7 @@
   * @version: v0.0.1
   * @author: aliben.develop@gmail.com
   * @create_date: 2018-07-31 20:49:07
-  * @last_modified_date: 2018-08-01 09:50:55
+  * @last_modified_date: 2018-08-01 17:10:56
   * @brief: Declaration of Camera class
   */
 
@@ -52,7 +52,7 @@ class Camera
      * @retval coor_point_camera The coordinate of this point in camera
      */
     Eigen::Vector3d world2camera(const Eigen::Vector3d& point_world,
-                                 const Sophus::SE3& T_camera_world);
+                                 const Sophus::SE3<double>& T_camera_world);
 
     /**
      * @brief A transformation of coordinate from world to pixel
@@ -61,7 +61,7 @@ class Camera
      * @retval coor_point_pixel The coordinate of this point in pixel
      */
     Eigen::Vector2d world2pixel(const Eigen::Vector3d& point_world,
-                                const Sophus::SE3& T_camera_world);
+                                const Sophus::SE3<double>& T_camera_world);
 
     /**
      * @brief A transformation of coordinate from camera to world
@@ -70,7 +70,7 @@ class Camera
      * @retval coor_point_world The coordinate of this point in world
      */
     Eigen::Vector3d camera2world(const Eigen::Vector3d& point_camera,
-                                 const Sophus::SE3& T_world_camera);
+                                 const Sophus::SE3<double>& T_world_camera);
 
     /**
      * @brief A transformation of coordinate from camera to pixel
@@ -97,8 +97,11 @@ class Camera
      * @retval coor_point_world The coordinate of this point in world
      */
     Eigen::Vector3d pixel2world(const Eigen::Vector2d& point_pixel,
-                                const Sophus::SE3& T_camera_world,
+                                const Sophus::SE3<double>& T_camera_world,
                                 double depth=1);
+
+    inline float get_depth_scale() const
+    { return depth_scale_; }
 
 
   public:
