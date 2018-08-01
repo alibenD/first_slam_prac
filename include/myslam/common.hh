@@ -7,9 +7,9 @@
   * @version: v0.0.1
   * @author: aliben.develop@gmail.com
   * @create_date: 2018-07-31 17:37:08
-  * @last_modified_date: 2018-07-31 17:46:57
+  * @last_modified_date: 2018-07-31 22:38:59
   * @brief: TODO
-  * @detail: TODO
+  * @details: TODO
   *-----------------------------------------------*/
 
 // Header include
