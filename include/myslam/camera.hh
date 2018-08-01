@@ -6,7 +6,7 @@
   * @version: v0.0.1
   * @author: aliben.develop@gmail.com
   * @create_date: 2018-07-31 20:49:07
-  * @last_modified_date: 2018-08-01 09:01:29
+  * @last_modified_date: 2018-08-01 09:50:55
   * @brief: Declaration of Camera class
   */
 
@@ -110,7 +110,7 @@ class Camera
     float cx_;  /*!< Coordinates of optic center(x)*/
     float cy_;  /*!< Coordinates of optic center(y)*/
     float depth_scale_; /*!< Scale of depth */
-}
+};
 
 }   // END of namespace myslam
 #endif // __CAMERA_HH__
