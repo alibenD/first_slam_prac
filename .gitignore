@@ -1,0 +1,19 @@
+#!/bin/bash
+
+#---Automatically Generated from template 'bash' wrote by @aliben---
+# @Copyright (C) 2018 All rights reserved.
+# @name: .gitignore
+# @author: aliben.develop@gmail.com
+# @created_date: 2018-08-01 09:15:52
+# @last_modified_date: NO_LAST_MODIFIED_DATE
+# @description: TODO
+#---***********************************************---
+
+#IGNORE LIST
+doc
+*.obj
+*.swp
+*.swo
+
+#DON NOT IGNORE LIST
+
