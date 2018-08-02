@@ -6,7 +6,7 @@
   * @version: v0.0.1
   * @author: aliben.develop@gmail.com
   * @create_date: 2018-07-31 20:49:07
-  * @last_modified_date: 2018-08-01 17:10:56
+  * @last_modified_date: 2018-08-02 09:52:47
   * @brief: Declaration of Camera class
   */
 
@@ -34,6 +34,15 @@ class Camera
 {
   public:
     Camera() = default;
+
+    /**
+     * @brief A constructor with camera parameter
+     * @param[in] fx Focal distance by Alpha(x axis)
+     * @param[in] fy Focal distance by Beta(y axis)
+     * @param[in] cx Coordinates of optic center at x axis
+     * @param[in] cy Coordinates of optic center at y axis
+     * @param[in] depth_scale Scale of depth
+     */
     Camera(float fx, float fy,
            float cx, float cy, float depth_scale=0)
       : fx_(fx),
@@ -47,65 +56,66 @@ class Camera
 
     /**
      * @brief A transformation of coordinates from world to camera.
-     * @param[IN] point_world The coordinate of this point in the world frame.
-     * @param[IN] T_camera_world The transformation(Lie Algebra) from worl to camera.
-     * @retval coor_point_camera The coordinate of this point in camera
+     * @param[in] point_world The coordinate of this point in the world frame.
+     * @param[in] T_camera_world The transformation(Lie Algebra) from worl to camera.
+     * @return coor_point_camera The coordinate of this point in camera
      */
     Eigen::Vector3d world2camera(const Eigen::Vector3d& point_world,
                                  const Sophus::SE3<double>& T_camera_world);
 
     /**
      * @brief A transformation of coordinate from world to pixel
-     * @param[IN] point_world The coordinate of this point in the world frame.
-     * @param[IN] T_camera_world The transformation(Lie Algebra) from camera to world.
-     * @retval coor_point_pixel The coordinate of this point in pixel
+     * @param[in] point_world The coordinate of this point in the world frame.
+     * @param[in] T_camera_world The transformation(Lie Algebra) from camera to world.
+     * @return coor_point_pixel The coordinate of this point in pixel
      */
     Eigen::Vector2d world2pixel(const Eigen::Vector3d& point_world,
                                 const Sophus::SE3<double>& T_camera_world);
 
     /**
      * @brief A transformation of coordinate from camera to world
-     * @param[IN] point_camera The coordinate of this point in the world frame.
-     * @param[IN] T_world_camera The transformation(Lie Algebra) from camera to world.
-     * @retval coor_point_world The coordinate of this point in world
+     * @param[in] point_camera The coordinate of this point in the world frame.
+     * @param[in] T_world_camera The transformation(Lie Algebra) from camera to world.
+     * @return coor_point_world The coordinate of this point in world
      */
     Eigen::Vector3d camera2world(const Eigen::Vector3d& point_camera,
                                  const Sophus::SE3<double>& T_world_camera);
 
     /**
      * @brief A transformation of coordinate from camera to pixel
-     * @param[IN] point_camera The coordinate of this point in the world frame.
-     * @retval coor_point_pixel The coordinate of this point in pixel
+     * @param[in] point_camera The coordinate of this point in the world frame.
+     * @return coor_point_pixel The coordinate of this point in pixel
      */
     Eigen::Vector2d camera2pixel(const Eigen::Vector3d& point_camera);
 
 
     /**
      * @brief A transformation of coordinate from pixel to camera
-     * @param[IN] point_pixel The coordinate of this point in the pixel frame.
-     * @param[IN] depth a
-     * @retval coor_point_camera The coordinate of this point in camera
+     * @param[in] point_pixel The coordinate of this point in the pixel frame.
+     * @param[in] depth a
+     * @return coor_point_camera The coordinate of this point in camera
      */
     Eigen::Vector3d pixel2camera(const Eigen::Vector2d& point_pixel,
                                  double depth=1);
 
     /**
      * @brief A transformation of coordinate from pixel to world
-     * @param[IN] point_pixel The coordinate of this point in the pixel frame.
-     * @param[IN] T_camera_world The transformation(Lie Algebra) from worl to camera.
-     * @param[IN] depth a
-     * @retval coor_point_world The coordinate of this point in world
+     * @param[in] point_pixel The coordinate of this point in the pixel frame.
+     * @param[in] T_camera_world The transformation(Lie Algebra) from worl to camera.
+     * @param[in] depth 
+     * @return coor_point_world The coordinate of this point in world
      */
     Eigen::Vector3d pixel2world(const Eigen::Vector2d& point_pixel,
                                 const Sophus::SE3<double>& T_camera_world,
                                 double depth=1);
 
+    // Get methods
     inline float get_depth_scale() const
     { return depth_scale_; }
 
 
   public:
-    typedef std::shared_ptr<Camera> Ptr;    /*!< A pointer points this instance*/
+    typedef std::shared_ptr<Camera> Ptr;    /*!< A shared_pointer points Camera*/
 
   private:
     float fx_;  /*!< Focal distance by alpha(x axis direction)*/

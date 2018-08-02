@@ -7,7 +7,7 @@
   * @version: v0.0.1
   * @author: aliben.develop@gmail.com
   * @create_date: 2018-08-01 10:18:58
-  * @last_modified_date: 2018-08-01 10:28:39
+  * @last_modified_date: 2018-08-02 10:19:14
   * @brief: TODO
   * @details: TODO
   *-----------------------------------------------*/
@@ -27,7 +27,18 @@ namespace myslam
     public:
       Config() = default;
       virtual ~Config() = default;
+
+      /**
+       * @brief Given a path of config file, read settings from it.
+       * @param[in] filename The path of a config file
+       */
       static int setParameterFile(const std::string& filename);
+
+      /**
+       * @brief A template static function for getting different type of setting items
+       * @param[in] key The key of an item
+       * @return The value of this item
+       */
       template<typename T>
         static T get(const std::string& key)
         {
@@ -35,8 +46,8 @@ namespace myslam
         }
 
     private:
-      static std::shared_ptr<Config> config_;
-      cv::FileStorage file_;
+      static std::shared_ptr<Config> config_;   /*!< A share_pointer points Config*/
+      cv::FileStorage file_;                    /*!< A config file handle*/
   };
 }   // END of namespace myslam
 #endif // __CONFIG_HH__
