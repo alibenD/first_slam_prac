@@ -14,6 +14,7 @@ doc
 *.obj
 *.swp
 *.swo
+build/*
 
 #DON NOT IGNORE LIST
 
