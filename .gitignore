@@ -15,6 +15,7 @@ doc
 *.swp
 *.swo
 build/*
+lib/*
 
 #DON NOT IGNORE LIST
 
