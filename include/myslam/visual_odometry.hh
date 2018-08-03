@@ -7,27 +7,31 @@
   * @version: v0.0.1
   * @author: aliben.develop@gmail.com
   * @create_date: 2018-08-02 08:35:52
-  * @last_modified_date: 2018-08-03 09:02:09
+  * @last_modified_date: 2018-08-03 10:33:31
   * @brief: TODO
   * @details: TODO
   *-----------------------------------------------*/
 
 // Header include
 #include <myslam/common.hh>
+#include <myslam/map.hh>
+#include <opencv2/features2d/features2d.hpp>
 
 // Declaration
 namespace myslam
 {
   class VisualOdometry
   {
+
     public:
       typedef std::shared_ptr<VisualOdometry> Ptr;  /**< A share_pointer points VisualOdometry*/
       enum VOStatus
       {
-        INITIALIZING = -1;
+        INITIALIZING = -1,
         OK = 0,
         LOST
       };
+      typedef enum VOStatus eVOStatus;
 
     private:
       VOStatus status_;               /**< VO status */
@@ -59,13 +63,19 @@ namespace myslam
 
     public:
       VisualOdometry();
-      virtual VisualOdometry() = default;
+      virtual ~VisualOdometry() = default;
 
       /**
        * @brief Add a new frame and check if it is a key frame
        * @param[in] frame A new frame from camera
        */
       bool addFrame(Frame::Ptr frame);
+
+      /**
+       * @brief Get the status of this VO
+       */
+      eVOStatus getStatus()
+      { return status_; }
 
     protected:
       int extractKeyPoints();

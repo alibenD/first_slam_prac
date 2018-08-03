@@ -7,7 +7,7 @@
   * @version: v0.0.1
   * @author: aliben.develop@gmail.com
   * @create_date: 2018-08-01 09:33:08
-  * @last_modified_date: 2018-08-02 09:51:52
+  * @last_modified_date: 2018-08-03 10:59:42
   * @brief: TODO
   * @details: TODO
   *-----------------------------------------------*/
@@ -98,6 +98,12 @@ namespace myslam
       { return timestamp_;}
 
       /**
+       * @brief Get the TF from world to camera coordinate
+       */
+      inline Sophus::SE3<double>& get_Tcw()
+      { return T_camera_world_; }
+
+      /**
        * @brief Get the color channels of this frame
        * @param[out] color_will_get color channels of this frame
        */
@@ -105,6 +111,15 @@ namespace myslam
       {
         color_will_get = color_;
         return 0;
+      }
+
+      /**
+       * @brief Get the color channels of this frame
+       * @return A reference of the channels of BGR colors
+       */
+      inline const cv::Mat& get_color() const
+      {
+        return color_;
       }
 
       /**
@@ -135,6 +150,16 @@ namespace myslam
       inline int set_timestamp(double timestamp_will_set)
       {
         timestamp_ = timestamp_will_set;
+        return 0;
+      }
+
+      /**
+       * @brief Set a new TF from world to camera
+       * @param[in] Tcw_will_set A new TF
+       */
+      inline int set_Tcw(const Sophus::SE3<double>& Tcw_will_set)
+      {
+        T_camera_world_ = Tcw_will_set;
         return 0;
       }
 

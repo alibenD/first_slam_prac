@@ -5,20 +5,20 @@
   * @version: v0.0.1
   * @author: aliben.develop@gmail.com
   * @create_date: 2018-08-02 10:35:36
-  * @last_modified_date: 2018-08-03 09:03:56
+  * @last_modified_date: 2018-08-03 11:08:54
   * @brief: TODO
   * @details: TODO
   */
 
 //INCLUDE
-#include <visual_odometry.hh>
-#include <myslam.config.h>
+#include <myslam/visual_odometry.hh>
+#include <myslam/config.hh>
 
 #include <Eigen/Core>
 #include <opencv2/core/eigen.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
-#include <opencv/calib3d/calib3d.hpp>
+#include <opencv2/calib3d/calib3d.hpp>
 #include <algorithm>
 #include <boost/timer.hpp>
 
@@ -47,7 +47,7 @@ namespace myslam
 
   bool VisualOdometry::addFrame(Frame::Ptr frame)
   {
-    switch( state_ )
+    switch( status_ )
     {
       case INITIALIZING:
         {
@@ -68,7 +68,7 @@ namespace myslam
           poseEstimationPnP();
           if( checkEstimatePose() == true )
           {
-            current_frame_->T_camera_world_ = T_curr_ref_estimated_ * reference_frame_->T_camera_world_;
+            current_frame_->set_Tcw(T_curr_ref_estimated_ * reference_frame_->get_Tcw());
             reference_frame_ = current_frame_;
             setRef3DPoints();
             num_lost_ = 0;
@@ -94,17 +94,18 @@ namespace myslam
           break;
         }
     }
+    return true;
   }
 
   int VisualOdometry::extractKeyPoints()
   {
-    orb_->detect( current_frame_->color_, keypoints_curr_frame_ );
+    orb_->detect( current_frame_->get_color(), keypoints_curr_frame_ );
     return 0;
   }
 
   int VisualOdometry::computeDescriptors()
   {
-    orb_->compute( current_frame_->color_, keypoints_curr_frame_, descriptors_curr_ );
+    orb_->compute( current_frame_->get_color(), keypoints_curr_frame_, descriptors_curr_ );
     return 0;
   }
 
@@ -114,7 +115,7 @@ namespace myslam
     cv::BFMatcher matcher(cv::NORM_HAMMING);
     matcher.match(descriptors_ref_, descriptors_curr_, matches);
     float min_distance = std::min_element(matches.begin(),
-                                          matched.end(),
+                                          matches.end(),
                                           [](const cv::DMatch& m1, const cv::DMatch& m2)
     {
       return m1.distance < m2.distance;
@@ -137,27 +138,28 @@ namespace myslam
     descriptors_ref_ = cv::Mat();
     for(size_t i=0; i<keypoints_curr_frame_.size();i++)
     {
-      double depth = reference_frame_->findDepth(keypoints_curr_[i]);
+      double depth = reference_frame_->findDepth(keypoints_curr_frame_[i]);
       if(depth > 0)
       {
 
-        cv::Vector3d point_camera = reference_frame_->camera_->pixel2camer(cv::Vector2d(keypoints_curr_frame_[i].pt.x,keypoints_curr_frame_[i].pt.y), depth);
+        Sophus::Vector3d point_camera = reference_frame_->camera_->pixel2camera(Sophus::Vector2d(keypoints_curr_frame_[i].pt.x,keypoints_curr_frame_[i].pt.y), depth);
         point_ref_frame_.push_back(cv::Point3f(point_camera(0,0),
                                                point_camera(1,0),
                                                point_camera(2.0)));
         descriptors_ref_.push_back(descriptors_curr_.row(i));
       }
     }
+    return 0;
   }
   
   int VisualOdometry::poseEstimationPnP()
   {
     std::vector<cv::Point3f> points_3d;
     std::vector<cv::Point2f> points_2d;
-    for(cv::DMatach m:feature_matches_)
+    for(cv::DMatch m:feature_matches_)
     {
-      points_3d.push_back(point_ref_frame_[m.queryIdex]);
-      points_3d.push_back(keypoints_curr_)
+      points_3d.push_back(point_ref_frame_[m.queryIdx]);
+      points_2d.push_back(keypoints_curr_frame_[m.trainIdx].pt);
     }
 
     float fx, fy, cx, cy;
@@ -171,7 +173,7 @@ namespace myslam
                        0,  1,  0);
     cv::Mat rvec, tvec, inliers;
     cv::solvePnPRansac(points_3d, points_2d, K,
-                       cv::Mat(), rev, tvec,
+                       cv::Mat(), rvec, tvec,
                        false, 100, 4.0,
                        0.99, inliers);
     num_inliers_ = inliers.rows;
@@ -180,10 +182,10 @@ namespace myslam
     cv::Mat R;
     cv::Rodrigues(rvec, R);
     Eigen::Matrix3d r;
-    cv::cv::cv2eigen(R, r);
+    cv::cv2eigen(R, r);
 
     Eigen::AngleAxisd angle(r);
-    Eigen::Quateriniond q(r);
+    Eigen::Quaterniond q(r);
     T_curr_ref_estimated_ = Sophus::SE3<double>(Sophus::SO3<double>(q), Eigen::Vector3d(tvec.at<double>(0,0), tvec.at<double>(1,0), tvec.at<double>(2,0)));
     return 0;
   }
@@ -221,5 +223,6 @@ namespace myslam
   {
     std::cout << "Adding a key-frame." << std::endl;
     map_->insertKeyFrame(current_frame_);
+    return 0;
   }
 } // END of namespace myslam
