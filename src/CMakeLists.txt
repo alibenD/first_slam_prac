@@ -4,7 +4,7 @@
 # @filename: CMakeLists.txt
 # @author: aliben.develop@gmail.com
 # @create_date: 2018-08-01 16:04:18
-# @last_modified_date: 2018-08-01 16:05:24
+# @last_modified_date: 2018-08-03 10:43:37
 # @description: TODO
 #---****************************************************************---
 
@@ -15,7 +15,9 @@ ADD_LIBRARY(myslam SHARED
   mappoint.cc
   map.cc
   camera.cc
-  config.cc)
+  config.cc
+  visual_odometry.cc)
+
 # Set Dependence PATH
   # Example: set ( PACKAGE_DIR PATH )
 
