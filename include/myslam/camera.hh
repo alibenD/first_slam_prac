@@ -6,7 +6,7 @@
   * @version: v0.0.1
   * @author: aliben.develop@gmail.com
   * @create_date: 2018-07-31 20:49:07
-  * @last_modified_date: 2018-08-02 09:52:47
+  * @last_modified_date: 2018-08-03 08:26:31
   * @brief: Declaration of Camera class
   */
 
@@ -110,6 +110,47 @@ class Camera
                                 double depth=1);
 
     // Get methods
+
+    /**
+     * @brief Get Focal distance(x axis) of this camera
+     * @return The value of focal distance(x axis)
+     */
+    inline float get_fx() const
+    {
+      return fx_;
+    }
+
+    /**
+     * @brief Get Focal distance(y axis) of this camera
+     * @return The value of focal distance(y axis)
+     */
+    inline float get_fy() const
+    {
+      return fy_;
+    }
+
+    /**
+     *  @brief Get the coordinate of optic center on x axis
+     *  @return The value of coor x
+     */
+    inline float get_cx() const
+    {
+      return cx_;
+    }
+
+    /**
+     *  @brief Get the coordinate of optic center on y axis
+     *  @return The value of coor y
+     */
+    inline float get_cy() const
+    {
+      return cy_;
+    }
+
+    /**
+     * @brief Get scale of depth of this camera
+     * @return A value of scale of depth
+     */
     inline float get_depth_scale() const
     { return depth_scale_; }
 
