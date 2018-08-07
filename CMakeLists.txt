@@ -4,7 +4,7 @@
 # @filename: CMakeLists.txt
 # @author: aliben.develop@gmail.com
 # @create_date: 2018-08-01 15:25:28
-# @last_modified_date: 2018-08-02 08:09:07
+# @last_modified_date: 2018-08-06 22:14:47
 # @description: TODO
 #---****************************************************************---
 
@@ -16,11 +16,31 @@ project(myslam)
 
 set( CMAKE_CXX_COMPILER "g++" )
 set( CMAKE_BUILD_TYPE "Release" )
-set( CMAKE_CXX_FLAGS "-std=c++11 -march=native -O3" )
+set( CMAKE_CXX_FLAGS "-g -std=c++11 -march=native -O3")
+
+SET(CMAKE_VERVOSE_MAKEFILE ON)
+
+if (CMAKE_HOST_WIN32)
+    set(WINDOWS 1)
+elseif(CMAKE_HOST_APPLE)
+    set(MACOS 1)
+elseif(CMAKE_HOST_UNIX)
+    set(LINUX 1)
+endif()
+
+if(WINDOWS)
+else()
+    set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")
+    MESSAGE( STATUS "CMAKE_INSTALL_RPATH: " "${CMAKE_INSTALL_PREFIX}/lib" )
+    set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
+endif()
+
+
 
 list( APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake_modules )
 set( EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin )
 set( LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib )
+
 
 # Set Dependence PATH
   # Example: set ( PACKAGE_DIR PATH )
@@ -54,5 +74,3 @@ set( LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib )
 
 # TARGET LINK
   # Example: target_link_libraries( EXEC_NAME LIBPATH ) ...LIB_PATH e.g. ${OPENCV_LIBS}
-
-

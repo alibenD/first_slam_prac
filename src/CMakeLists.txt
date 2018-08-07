@@ -4,7 +4,7 @@
 # @filename: CMakeLists.txt
 # @author: aliben.develop@gmail.com
 # @create_date: 2018-08-01 16:04:18
-# @last_modified_date: 2018-08-03 10:43:37
+# @last_modified_date: 2018-08-06 09:55:36
 # @description: TODO
 #---****************************************************************---
 
@@ -30,5 +30,3 @@ ADD_LIBRARY(myslam SHARED
 # TARGET LINK
   # Example: target_link_libraries( EXEC_NAME LIBPATH ) ...LIB_PATH e.g. ${OPENCV_LIBS}
   TARGET_LINK_LIBRARIES(myslam ${THIRD_PARTY_LIBS})
-
-
