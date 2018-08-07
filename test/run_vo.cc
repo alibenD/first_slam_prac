@@ -5,7 +5,7 @@
   * @version: v0.0.1
   * @author: aliben.develop@gmail.com
   * @create_date: 2018-08-03 09:11:14
-  * @last_modified_date: 2018-08-03 10:38:35
+  * @last_modified_date: 2018-08-07 16:27:00
   * @brief: TODO
   * @details: TODO
   */
@@ -27,7 +27,7 @@ int main(int argc, char** argv)
     return 1;
   }
   myslam::Config::setParameterFile(argv[1]);
-  myslam::VisualOdometry::Ptr vo(new myslam::VisualOdometry);
+  myslam::VisualOdometry::Ptr vo(new myslam::VisualOdometry());
 
   std::string dataset_dir = myslam::Config::get<std::string>("dataset_dir");
   std::cout << "Dataset: " << dataset_dir << std::endl;
@@ -44,18 +44,24 @@ int main(int argc, char** argv)
   while( !fin.eof() )
   {
     std::string rgb_time, rgb_file, depth_time, depth_file;
-    fin >> rgb_time >> rgb_file >> depth_time >> depth_file;
+    fin >> rgb_time
+        >> rgb_file
+        >> depth_time
+        >> depth_file;
+
     rgb_times.push_back( atof(rgb_time.c_str()) );
     depth_times.push_back( atof(depth_time.c_str()) );
-    rgb_files.push_back(dataset_dir + "/" + depth_file);
+    rgb_files.push_back(dataset_dir + "/" + rgb_file);
+    depth_files.push_back(dataset_dir + "/" + depth_file);
 
     if(fin.good() == false)
     {
       break;
     }
   }
+  //std::cout << "Size of rgb: " << rgb_files.size() << " ; size of depth: " << depth_files.size() << std::endl;
 
-  myslam::Camera::Ptr camera(new myslam::Camera);
+  myslam::Camera::Ptr camera(new myslam::Camera());
 
   // Visualization
   cv::viz::Viz3d vis("Visual Odometry");
@@ -74,7 +80,7 @@ int main(int argc, char** argv)
   for(int i=0; i< rgb_files.size(); i++)
   {
     cv::Mat color = cv::imread(rgb_files[i]);
-    cv::Mat depth = cv::imread(depth_files[i], cv::IMREAD_UNCHANGED);
+    cv::Mat depth = cv::imread(depth_files[i], -1);
     if( color.data==nullptr || depth.data==nullptr)
     {
       break;
