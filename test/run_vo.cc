@@ -5,7 +5,7 @@
   * @version: v0.0.1
   * @author: aliben.develop@gmail.com
   * @create_date: 2018-08-03 09:11:14
-  * @last_modified_date: 2018-08-07 16:27:00
+  * @last_modified_date: 2018-08-07 17:12:21
   * @brief: TODO
   * @details: TODO
   */
@@ -103,8 +103,8 @@ int main(int argc, char** argv)
 
     cv::Affine3d M(cv::Affine3d::Mat3(
                       T_w_c.rotationMatrix()(0,0), T_w_c.rotationMatrix()(0,1), T_w_c.rotationMatrix()(0,2),
-                      T_w_c.rotationMatrix()(0,3), T_w_c.rotationMatrix()(0,4), T_w_c.rotationMatrix()(0,5),
-                      T_w_c.rotationMatrix()(0,6), T_w_c.rotationMatrix()(0,7), T_w_c.rotationMatrix()(0,8)
+                      T_w_c.rotationMatrix()(1,0), T_w_c.rotationMatrix()(1,1), T_w_c.rotationMatrix()(1,2),
+                      T_w_c.rotationMatrix()(2,0), T_w_c.rotationMatrix()(2,1), T_w_c.rotationMatrix()(2,2)
                       ),
                    cv::Affine3d::Vec3(T_w_c.translation()(0,0), T_w_c.translation()(1,0), T_w_c.translation()(2,0)));
     cv::imshow("Image", color);
