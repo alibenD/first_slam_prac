@@ -5,7 +5,7 @@
   * @version: v0.0.1
   * @author: aliben.develop@gmail.com
   * @create_date: 2018-08-02 10:35:36
-  * @last_modified_date: 2018-08-03 11:08:54
+  * @last_modified_date: 2018-08-07 15:55:48
   * @brief: TODO
   * @details: TODO
   */
@@ -30,7 +30,7 @@ namespace myslam
     : status_(INITIALIZING),
       reference_frame_(nullptr),
       current_frame_(nullptr),
-      map_(new Map),
+      map_(new Map()),
       num_lost_(0),
       num_inliers_(0)
   {
@@ -45,7 +45,7 @@ namespace myslam
     orb_ = cv::ORB::create( num_of_features_, scale_factor_, level_pyramid_ );
   }
 
-  bool VisualOdometry::addFrame(Frame::Ptr frame)
+  bool VisualOdometry::addFrame(const Frame::Ptr& frame)
   {
     switch( status_ )
     {
@@ -93,6 +93,8 @@ namespace myslam
           std::cout << "VO has lost." << std::endl;
           break;
         }
+      default:
+        break;
     }
     return true;
   }

@@ -6,7 +6,7 @@
   * @version: v0.0.1
   * @author: aliben.develop@gmail.com
   * @create_date: 2018-07-31 20:49:07
-  * @last_modified_date: 2018-08-03 08:28:31
+  * @last_modified_date: 2018-08-07 16:20:22
   * @brief: Declaration of Camera class
   */
 
@@ -33,7 +33,7 @@ namespace myslam
 class Camera
 {
   public:
-    Camera() = default;
+    Camera();
 
     /**
      * @brief A constructor with camera parameter
@@ -48,7 +48,8 @@ class Camera
       : fx_(fx),
         fy_(fy),
         cx_(cx),
-        cy_(cy)
+        cy_(cy),
+        depth_scale_(depth_scale)
     {};
     virtual ~Camera() = default;
 

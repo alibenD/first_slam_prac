@@ -5,7 +5,7 @@
   * @version: v0.0.1
   * @author: aliben.develop@gmail.com
   * @create_date: 2018-08-01 10:30:37
-  * @last_modified_date: 2018-08-02 09:19:01
+  * @last_modified_date: 2018-08-07 15:42:56
   * @brief: TODO
   * @details: TODO
   */
@@ -26,8 +26,8 @@ namespace myslam
       timestamp_(timestamp),
       T_camera_world_(T_camera_world),
       camera_(camera),
-      color_(color),
-      depth_(depth)
+      color_(color.clone()),
+      depth_(depth.clone())
   {
   }
 
@@ -75,9 +75,10 @@ namespace myslam
       return false;
     }
     Eigen::Vector2d point_pixel = camera_->world2pixel(point_world, T_camera_world_);
-    return point_pixel(0,0)>0 && point_pixel(1,0)>0
-        && point_pixel(0,0)<color_.cols
-        && point_pixel(1,0)<color_.rows;
+    return point_pixel(0,0)>0 &&
+           point_pixel(1,0)>0 &&
+           point_pixel(0,0)<color_.cols &&
+           point_pixel(1,0)<color_.rows;
   }
 
 }   // END of namespace myslam

@@ -20,7 +20,7 @@ namespace myslam
   {
     if(config_ == nullptr)
     {
-      config_ = std::shared_ptr<Config>(new Config);
+      config_ = std::shared_ptr<Config>(new Config());
     }
     config_->file_ = cv::FileStorage(filename.c_str(), cv::FileStorage::READ);
     if(config_->file_.isOpened() == false)

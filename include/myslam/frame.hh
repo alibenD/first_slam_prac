@@ -169,7 +169,7 @@ namespace myslam
        */
       inline int set_color(const cv::Mat& color_will_set)
       {
-        color_ = color_will_set;
+        color_ = color_will_set.clone();
         return 0;
       }
 
