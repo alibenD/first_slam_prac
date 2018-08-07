@@ -5,7 +5,7 @@
   * @version: v0.0.1
   * @author: aliben.develop@gmail.com
   * @create_date: 2018-08-02 10:35:36
-  * @last_modified_date: 2018-08-07 15:55:48
+  * @last_modified_date: 2018-08-07 17:06:31
   * @brief: TODO
   * @details: TODO
   */
@@ -223,7 +223,6 @@ namespace myslam
 
   int VisualOdometry::addKeyFrame()
   {
-    std::cout << "Adding a key-frame." << std::endl;
     map_->insertKeyFrame(current_frame_);
     return 0;
   }
