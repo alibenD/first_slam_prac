@@ -27,6 +27,8 @@ FIND_PATH(CSPARSE_INCLUDE_DIR NAMES cs.h
   /sw/include
   /sw/include/ufsparse
   /Users/aliben/dev/env/include/EXTERNAL
+  /Users/aliben/dev/env/include
+  /Users/aliben/dev/env/homebrew/include
   )
 
 FIND_LIBRARY(CSPARSE_LIBARAY NAMES cxsparse
@@ -34,6 +36,8 @@ FIND_LIBRARY(CSPARSE_LIBARAY NAMES cxsparse
   /usr/lib
   /usr/local/lib
   /opt/local/lib
+  /Users/aliben/dev/env/lib
+  /Users/aliben/dev/env/homebrew/lib
   /sw/lib
   )
 include(FindPackageHandleStandardArgs)

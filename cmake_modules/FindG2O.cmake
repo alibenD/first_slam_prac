@@ -9,8 +9,10 @@ FIND_PATH(G2O_INCLUDE_DIR g2o/core/base_vertex.h
   /opt/local/include
   /sw/local/include
   /sw/include
+  ${CMAKE_INSTALL_PREFIX}/include
   NO_DEFAULT_PATH
   )
+MESSAGE(STATUS "G2O_INCLUDE: ${G2O_INCLUDE_DIR}")
 
 # Macro to unify finding both the debug and release versions of the
 # libraries; this is adapted from the OpenSceneGraph FIND_LIBRARY
@@ -62,7 +64,6 @@ MACRO(FIND_G2O_LIBRARY MYLIBRARY MYLIBRARYNAME)
     /usr/lib
     /usr/lib64
     /opt/local/lib
-    /sw/local/lib
     /sw/lib
     )
   
