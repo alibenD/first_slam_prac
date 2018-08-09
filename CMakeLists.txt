@@ -4,7 +4,7 @@
 # @filename: CMakeLists.txt
 # @author: aliben.develop@gmail.com
 # @create_date: 2018-08-01 15:25:28
-# @last_modified_date: 2018-08-06 22:14:47
+# @last_modified_date: 2018-08-09 08:37:14
 # @description: TODO
 #---****************************************************************---
 
@@ -16,7 +16,7 @@ project(myslam)
 
 set( CMAKE_CXX_COMPILER "g++" )
 set( CMAKE_BUILD_TYPE "Release" )
-set( CMAKE_CXX_FLAGS "-g -std=c++11 -march=native -O3")
+set( CMAKE_CXX_FLAGS "-g -std=c++14 -march=native -O3")
 
 SET(CMAKE_VERVOSE_MAKEFILE ON)
 
@@ -40,6 +40,7 @@ endif()
 list( APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake_modules )
 set( EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin )
 set( LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib )
+LINK_DIRECTORIES(${CMAKE_INSTALL_PREFIX}/lib)
 
 
 # Set Dependence PATH
@@ -48,15 +49,18 @@ set( LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib )
   pkg_check_modules(EIGEN REQUIRED eigen3)
   #pkg_search_module(EIGEN REQUIRED eigen3)
   include_directories( ${EIGEN_INCLUDE_DIRS} )
-  MESSAGE(STATUS "${EIGEN_INCLUDE_DIRS}")
+  MESSAGE(STATUS ${EIGEN_INCLUDE_DIRS})
   FIND_PACKAGE(OpenCV REQUIRED)
   INCLUDE_DIRECTORIES( ${OpenCV_INCLUDE_DIRS} )
+  MESSAGE( STATUS "OpenCV Path: ${OpenCV_INCLUDE_DIRS}" )
 
   FIND_PACKAGE(Sophus REQUIRED)
   INCLUDE_DIRECTORIES( ${Sophus_INCLUDE_DIRS} )
+  MESSAGE( STATUS "Sophus Path: ${Sophus_INCLUDE_DIRS}" )
 
   FIND_PACKAGE(G2O REQUIRED)
   INCLUDE_DIRECTORIES( ${G2O_INCLUDE_DIRS} )
+  MESSAGE( STATUS "G2O Path: ${G2O_INCLUDE_DIRS}")
 
   SET( THIRD_PARTY_LIBS
     ${OpenCV_LIBS}
