@@ -5,7 +5,7 @@
   * @version: v0.0.1
   * @author: aliben.develop@gmail.com
   * @create_date: 2018-08-02 10:35:36
-  * @last_modified_date: 2018-08-07 17:06:31
+  * @last_modified_date: 2018-08-08 10:04:56
   * @brief: TODO
   * @details: TODO
   */
@@ -172,7 +172,7 @@ namespace myslam
     cv::Mat K = (cv::Mat_<double>(3,3) <<
                        fx, 0, cx,
                        0, fy, cy,
-                       0,  1,  0);
+                       0,  0,  1);
     cv::Mat rvec, tvec, inliers;
     cv::solvePnPRansac(points_3d, points_2d, K,
                        cv::Mat(), rvec, tvec,
