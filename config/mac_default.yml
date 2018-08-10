@@ -1,6 +1,6 @@
 %YAML:1.0
 
-dataset_dir: /home/aliben/project/data/rgbd_dataset_freiburg1_desk
+dataset_dir: /Users/aliben/project/data/rgbd_dataset_freiburg1_desk
 
 # Camera intrinsics
 # fr1
