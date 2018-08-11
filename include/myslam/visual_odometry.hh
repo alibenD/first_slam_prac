@@ -7,7 +7,7 @@
   * @version: v0.0.1
   * @author: aliben.develop@gmail.com
   * @create_date: 2018-08-02 08:35:52
-  * @last_modified_date: 2018-08-07 15:55:40
+  * @last_modified_date: 2018-08-12 00:45:04
   * @brief: TODO
   * @details: TODO
   *-----------------------------------------------*/
@@ -69,7 +69,7 @@ namespace myslam
        * @brief Add a new frame and check if it is a key frame
        * @param[in] frame A new frame from camera
        */
-      bool addFrame(const Frame::Ptr& frame);
+      bool addFrame(Frame::Ptr frame);
 
       /**
        * @brief Get the status of this VO

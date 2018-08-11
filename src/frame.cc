@@ -5,7 +5,7 @@
   * @version: v0.0.1
   * @author: aliben.develop@gmail.com
   * @create_date: 2018-08-01 10:30:37
-  * @last_modified_date: 2018-08-07 15:42:56
+  * @last_modified_date: 2018-08-11 23:30:48
   * @brief: TODO
   * @details: TODO
   */
@@ -33,8 +33,9 @@ namespace myslam
 
   Frame::Ptr Frame::createFrame()
   {
-    static long factory_id = 0;
-    return Frame::Ptr(new Frame(factory_id++));
+    static unsigned long factory_id = 0;
+    //return Frame::Ptr(new Frame(factory_id++));
+    return std::make_shared<Frame>(factory_id++);
   }
 
   double Frame::findDepth(const cv::KeyPoint& key_point)

@@ -7,7 +7,7 @@
   * @version: v0.0.1
   * @author: aliben.develop@gmail.com
   * @create_date: 2018-08-01 10:08:31
-  * @last_modified_date: 2018-08-02 09:51:35
+  * @last_modified_date: 2018-08-12 00:50:39
   * @brief: TODO
   * @details: TODO
   *-----------------------------------------------*/
@@ -35,7 +35,7 @@ namespace myslam
        * @brief Insert a new key frame in this map
        * @param[in] frame A shared_pointer of a key frame
        */
-      int insertKeyFrame(Frame::Ptr frame);
+      int insertKeyFrame(Frame::Ptr pFrame);
 
       /**
        * @brief Insert a new map point in this map

@@ -5,7 +5,7 @@
   * @version: v0.0.1
   * @author: aliben.develop@gmail.com
   * @create_date: 2018-08-01 13:32:48
-  * @last_modified_date: 2018-08-02 08:10:29
+  * @last_modified_date: 2018-08-11 22:51:56
   * @brief: TODO
   * @details: TODO
   */
@@ -20,7 +20,9 @@ namespace myslam
   {
     if(config_ == nullptr)
     {
-      config_ = std::shared_ptr<Config>(new Config());
+      //config_ = std::shared_ptr<Config>(new Config());
+      config_ = std::make_shared<Config>();
+      
     }
     config_->file_ = cv::FileStorage(filename.c_str(), cv::FileStorage::READ);
     if(config_->file_.isOpened() == false)

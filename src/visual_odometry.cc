@@ -5,7 +5,7 @@
   * @version: v0.0.1
   * @author: aliben.develop@gmail.com
   * @create_date: 2018-08-02 10:35:36
-  * @last_modified_date: 2018-08-08 10:04:56
+  * @last_modified_date: 2018-08-12 01:06:16
   * @brief: TODO
   * @details: TODO
   */
@@ -30,7 +30,7 @@ namespace myslam
     : status_(INITIALIZING),
       reference_frame_(nullptr),
       current_frame_(nullptr),
-      map_(new Map()),
+      map_(std::make_shared<Map>()),
       num_lost_(0),
       num_inliers_(0)
   {
@@ -45,7 +45,7 @@ namespace myslam
     orb_ = cv::ORB::create( num_of_features_, scale_factor_, level_pyramid_ );
   }
 
-  bool VisualOdometry::addFrame(const Frame::Ptr& frame)
+  bool VisualOdometry::addFrame(Frame::Ptr frame)
   {
     switch( status_ )
     {

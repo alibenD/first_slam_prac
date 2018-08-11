@@ -7,7 +7,7 @@
   * @version: v0.0.1
   * @author: aliben.develop@gmail.com
   * @create_date: 2018-08-01 09:33:08
-  * @last_modified_date: 2018-08-03 10:59:42
+  * @last_modified_date: 2018-08-11 23:23:20
   * @brief: TODO
   * @details: TODO
   *-----------------------------------------------*/
@@ -53,6 +53,8 @@ namespace myslam
             Camera::Ptr camera=nullptr,
             cv::Mat color=cv::Mat(),
             cv::Mat depth=cv::Mat());
+
+
       virtual ~Frame() = default;
 
       /**
@@ -100,7 +102,7 @@ namespace myslam
       /**
        * @brief Get the TF from world to camera coordinate
        */
-      inline Sophus::SE3<double>& get_Tcw()
+      inline const Sophus::SE3<double>& get_Tcw()
       { return T_camera_world_; }
 
       /**
