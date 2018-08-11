@@ -4,7 +4,7 @@
 # @filename: CMakeLists.txt
 # @author: aliben.develop@gmail.com
 # @create_date: 2018-08-01 15:25:28
-# @last_modified_date: 2018-08-09 08:37:14
+# @last_modified_date: 2018-08-11 13:40:25
 # @description: TODO
 #---****************************************************************---
 
@@ -16,7 +16,7 @@ project(myslam)
 
 set( CMAKE_CXX_COMPILER "g++" )
 set( CMAKE_BUILD_TYPE "Release" )
-set( CMAKE_CXX_FLAGS "-g -std=c++14 -march=native -O3")
+set( CMAKE_CXX_FLAGS "-g -std=c++14 -march=native -O0")
 
 SET(CMAKE_VERVOSE_MAKEFILE ON)
 
