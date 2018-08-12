@@ -5,7 +5,7 @@
   * @version: v0.0.1
   * @author: aliben.develop@gmail.com
   * @create_date: 2018-08-02 10:35:36
-  * @last_modified_date: 2018-08-12 01:06:16
+  * @last_modified_date: 2018-08-12 11:02:45
   * @brief: TODO
   * @details: TODO
   */
@@ -45,15 +45,15 @@ namespace myslam
     orb_ = cv::ORB::create( num_of_features_, scale_factor_, level_pyramid_ );
   }
 
-  bool VisualOdometry::addFrame(Frame::Ptr frame)
+  bool VisualOdometry::addFrame(Frame::Ptr pFrame)
   {
     switch( status_ )
     {
       case INITIALIZING:
         {
           status_ = OK;
-          current_frame_ = reference_frame_ = frame;
-          map_->insertKeyFrame(frame);
+          current_frame_ = reference_frame_ = pFrame;
+          map_->insertKeyFrame(pFrame);
           extractKeyPoints();
           computeDescriptors();
           setRef3DPoints();
@@ -61,7 +61,7 @@ namespace myslam
         }
       case OK:
         {
-          current_frame_ = frame;
+          current_frame_ = pFrame;
           extractKeyPoints();
           computeDescriptors();
           featureMatching();
