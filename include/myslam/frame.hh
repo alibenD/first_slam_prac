@@ -7,7 +7,7 @@
   * @version: v0.0.1
   * @author: aliben.develop@gmail.com
   * @create_date: 2018-08-01 09:33:08
-  * @last_modified_date: 2018-08-11 23:23:20
+  * @last_modified_date: 2018-08-12 22:40:08
   * @brief: TODO
   * @details: TODO
   *-----------------------------------------------*/
@@ -106,6 +106,16 @@ namespace myslam
       { return T_camera_world_; }
 
       /**
+       * @brief Get the TF from world to camera coordinate
+       * @param[out] Tcw_will_get Transformation from world to camera
+       */
+      inline int get_Tcw(Sophus::SE3<double>& Tcw_will_get) const
+      {
+        Tcw_will_get = T_camera_world_;
+        return 0;
+      }
+
+      /**
        * @brief Get the color channels of this frame
        * @param[out] color_will_get color channels of this frame
        */
@@ -171,7 +181,8 @@ namespace myslam
        */
       inline int set_color(const cv::Mat& color_will_set)
       {
-        color_ = color_will_set.clone();
+        //color_ = color_will_set.clone();
+        color_will_set.copyTo(color_);
         return 0;
       }
 
@@ -181,7 +192,8 @@ namespace myslam
        */
       inline int set_depth(const cv::Mat& depth_will_set)
       {
-        depth_ = depth_will_set;
+        //depth_ = depth_will_set.clone();
+        depth_will_set.copyTo(depth_);
         return 0;
       }
 

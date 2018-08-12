@@ -5,7 +5,7 @@
   * @version: v0.0.1
   * @author: aliben.develop@gmail.com
   * @create_date: 2018-08-01 10:30:37
-  * @last_modified_date: 2018-08-11 23:30:48
+  * @last_modified_date: 2018-08-12 22:42:56
   * @brief: TODO
   * @details: TODO
   */
@@ -25,17 +25,23 @@ namespace myslam
     : id_(id),
       timestamp_(timestamp),
       T_camera_world_(T_camera_world),
-      camera_(camera),
-      color_(color.clone()),
-      depth_(depth.clone())
+      camera_(camera)
+      //color_(color.clone()),
+      //depth_(depth.clone())
   {
+    color.copyTo(color_);
+    depth.copyTo(depth_);
   }
 
   Frame::Ptr Frame::createFrame()
   {
     static unsigned long factory_id = 0;
     //return Frame::Ptr(new Frame(factory_id++));
-    return std::make_shared<Frame>(factory_id++);
+    //return std::make_shared<Frame>(factory_id++);
+    auto pFrame = std::make_shared<Frame>(factory_id);
+    std::cout << "Frame ID: " << factory_id << std::endl;
+    factory_id++;
+    return pFrame;
   }
 
   double Frame::findDepth(const cv::KeyPoint& key_point)

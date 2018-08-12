@@ -7,7 +7,7 @@
   * @version: v0.0.1
   * @author: aliben.develop@gmail.com
   * @create_date: 2018-08-02 08:35:52
-  * @last_modified_date: 2018-08-12 00:45:04
+  * @last_modified_date: 2018-08-12 21:46:59
   * @brief: TODO
   * @details: TODO
   *-----------------------------------------------*/
@@ -36,10 +36,10 @@ namespace myslam
     private:
       VOStatus status_;               /**< VO status */
       Map::Ptr map_;                  /**< A map pointer */
-      Frame::Ptr reference_frame_;    /**< A reference frame pointer */
-      Frame::Ptr current_frame_;      /**< A current frame pointer */
+      Frame::Ptr pFrame_reference_;    /**< A reference frame pointer */
+      Frame::Ptr pFrame_current_;      /**< A current frame pointer */
 
-      cv::Ptr<cv::ORB> orb_;          /**< A detector/computer of ORB */
+      cv::Ptr<cv::ORB> pOrb_;          /**< A detector/computer of ORB */
       std::vector<cv::Point3f> point_ref_frame_;        /**< 3D points in reference frame */
       std::vector<cv::KeyPoint> keypoints_curr_frame_;  /**< Keypoints in   */
       cv::Mat descriptors_curr_;      /**< Descriptor in current frame */

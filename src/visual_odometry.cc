@@ -5,7 +5,7 @@
   * @version: v0.0.1
   * @author: aliben.develop@gmail.com
   * @create_date: 2018-08-02 10:35:36
-  * @last_modified_date: 2018-08-12 11:02:45
+  * @last_modified_date: 2018-08-12 21:45:08
   * @brief: TODO
   * @details: TODO
   */
@@ -28,8 +28,8 @@ namespace myslam
 {
   VisualOdometry::VisualOdometry()
     : status_(INITIALIZING),
-      reference_frame_(nullptr),
-      current_frame_(nullptr),
+      pFrame_reference_(nullptr),
+      pFrame_current_(nullptr),
       map_(std::make_shared<Map>()),
       num_lost_(0),
       num_inliers_(0)
@@ -42,7 +42,7 @@ namespace myslam
     min_inliers_        = Config::get<int> ("min_inliers");
     keyframe_min_rot_   = Config::get<double> ("keyframe_rotation");
     keyframe_min_trans_ = Config::get<double> ("keyframe_transformation");
-    orb_ = cv::ORB::create( num_of_features_, scale_factor_, level_pyramid_ );
+    pOrb_ = cv::ORB::create( num_of_features_, scale_factor_, level_pyramid_ );
   }
 
   bool VisualOdometry::addFrame(Frame::Ptr pFrame)
@@ -52,7 +52,7 @@ namespace myslam
       case INITIALIZING:
         {
           status_ = OK;
-          current_frame_ = reference_frame_ = pFrame;
+          pFrame_current_ = pFrame_reference_ = pFrame;
           map_->insertKeyFrame(pFrame);
           extractKeyPoints();
           computeDescriptors();
@@ -61,15 +61,15 @@ namespace myslam
         }
       case OK:
         {
-          current_frame_ = pFrame;
+          pFrame_current_ = pFrame;
           extractKeyPoints();
           computeDescriptors();
           featureMatching();
           poseEstimationPnP();
           if( checkEstimatePose() == true )
           {
-            current_frame_->set_Tcw(T_curr_ref_estimated_ * reference_frame_->get_Tcw());
-            reference_frame_ = current_frame_;
+            pFrame_current_->set_Tcw(T_curr_ref_estimated_ * pFrame_reference_->get_Tcw());
+            pFrame_reference_ = pFrame_current_;
             setRef3DPoints();
             num_lost_ = 0;
             if( checkKeyFrame() == true )
@@ -101,13 +101,13 @@ namespace myslam
 
   int VisualOdometry::extractKeyPoints()
   {
-    orb_->detect( current_frame_->get_color(), keypoints_curr_frame_ );
+    pOrb_->detect( pFrame_current_->get_color(), keypoints_curr_frame_ );
     return 0;
   }
 
   int VisualOdometry::computeDescriptors()
   {
-    orb_->compute( current_frame_->get_color(), keypoints_curr_frame_, descriptors_curr_ );
+    pOrb_->compute( pFrame_current_->get_color(), keypoints_curr_frame_, descriptors_curr_ );
     return 0;
   }
 
@@ -140,11 +140,11 @@ namespace myslam
     descriptors_ref_ = cv::Mat();
     for(size_t i=0; i<keypoints_curr_frame_.size();i++)
     {
-      double depth = reference_frame_->findDepth(keypoints_curr_frame_[i]);
+      double depth = pFrame_reference_->findDepth(keypoints_curr_frame_[i]);
       if(depth > 0)
       {
 
-        Sophus::Vector3d point_camera = reference_frame_->camera_->pixel2camera(Sophus::Vector2d(keypoints_curr_frame_[i].pt.x,keypoints_curr_frame_[i].pt.y), depth);
+        Sophus::Vector3d point_camera = pFrame_reference_->camera_->pixel2camera(Sophus::Vector2d(keypoints_curr_frame_[i].pt.x,keypoints_curr_frame_[i].pt.y), depth);
         point_ref_frame_.push_back(cv::Point3f(point_camera(0,0),
                                                point_camera(1,0),
                                                point_camera(2.0)));
@@ -165,10 +165,10 @@ namespace myslam
     }
 
     float fx, fy, cx, cy;
-    fx = reference_frame_->camera_->get_fx();
-    fy = reference_frame_->camera_->get_fy();
-    cx = reference_frame_->camera_->get_cx();
-    cy = reference_frame_->camera_->get_cy();
+    fx = pFrame_reference_->camera_->get_fx();
+    fy = pFrame_reference_->camera_->get_fy();
+    cx = pFrame_reference_->camera_->get_cx();
+    cy = pFrame_reference_->camera_->get_cy();
     cv::Mat K = (cv::Mat_<double>(3,3) <<
                        fx, 0, cx,
                        0, fy, cy,
@@ -223,7 +223,7 @@ namespace myslam
 
   int VisualOdometry::addKeyFrame()
   {
-    map_->insertKeyFrame(current_frame_);
+    map_->insertKeyFrame(pFrame_current_);
     return 0;
   }
 } // END of namespace myslam
