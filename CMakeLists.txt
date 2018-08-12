@@ -4,7 +4,7 @@
 # @filename: CMakeLists.txt
 # @author: aliben.develop@gmail.com
 # @create_date: 2018-08-01 15:25:28
-# @last_modified_date: 2018-08-11 13:40:25
+# @last_modified_date: 2018-08-12 23:35:26
 # @description: TODO
 #---****************************************************************---
 
@@ -45,11 +45,9 @@ LINK_DIRECTORIES(${CMAKE_INSTALL_PREFIX}/lib)
 
 # Set Dependence PATH
   # Example: set ( PACKAGE_DIR PATH )
-  find_package(PkgConfig)
-  pkg_check_modules(EIGEN REQUIRED eigen3)
-  #pkg_search_module(EIGEN REQUIRED eigen3)
-  include_directories( ${EIGEN_INCLUDE_DIRS} )
-  MESSAGE(STATUS ${EIGEN_INCLUDE_DIRS})
+  FIND_PACKAGE(Eigen3 REQUIRED)
+  include_directories( ${EIGEN3_INCLUDE_DIRS} )
+  MESSAGE(STATUS ${EIGEN3_INCLUDE_DIRS})
   FIND_PACKAGE(OpenCV REQUIRED)
   INCLUDE_DIRECTORIES( ${OpenCV_INCLUDE_DIRS} )
   MESSAGE( STATUS "OpenCV Path: ${OpenCV_INCLUDE_DIRS}" )
