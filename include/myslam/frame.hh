@@ -7,7 +7,7 @@
   * @version: v0.0.1
   * @author: aliben.develop@gmail.com
   * @create_date: 2018-08-01 09:33:08
-  * @last_modified_date: 2018-08-12 22:40:08
+  * @last_modified_date: 2018-08-13 10:57:40
   * @brief: TODO
   * @details: TODO
   *-----------------------------------------------*/
@@ -49,7 +49,7 @@ namespace myslam
        */
       Frame(long id,
             double timestamp=0,
-            Sophus::SE3<double> T_camera_world=Sophus::SE3<double>(),
+            Sophus::SE3<double> T_camera_world=Sophus::SE3<double>(Eigen::Quaterniond(Eigen::AngleAxisd(0, Eigen::Vector3d(0,0,1))), Eigen::Vector3d(0,0,0)),
             Camera::Ptr camera=nullptr,
             cv::Mat color=cv::Mat(),
             cv::Mat depth=cv::Mat());
