@@ -5,7 +5,7 @@
   * @version: v0.0.1
   * @author: aliben.develop@gmail.com
   * @create_date: 2018-08-02 10:35:36
-  * @last_modified_date: 2018-08-13 11:28:56
+  * @last_modified_date: 2018-08-13 11:45:26
   * @brief: TODO
   * @details: TODO
   */
@@ -188,6 +188,8 @@ namespace myslam
                        0.99, inliers);
     num_inliers_ = inliers.rows;
     std::cout << "PnP inliers: " << num_inliers_ << std::endl;
+    std::cout << "rvec: " << rvec << std::endl;
+    std::cout << "tvec: " << tvec << std::endl;
 
     cv::Mat R;
     cv::Rodrigues(rvec, R);
