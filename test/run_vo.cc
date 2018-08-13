@@ -5,7 +5,7 @@
   * @version: v0.0.1
   * @author: aliben.develop@gmail.com
   * @create_date: 2018-08-03 09:11:14
-  * @last_modified_date: 2018-08-13 16:34:23
+  * @last_modified_date: 2018-08-13 22:00:56
   * @brief: TODO
   * @details: TODO
   */
@@ -27,7 +27,8 @@ int main(int argc, char** argv)
     return 1;
   }
   myslam::Config::setParameterFile(argv[1]);
-  myslam::VisualOdometry::Ptr vo(new myslam::VisualOdometry());
+  //myslam::VisualOdometry::Ptr vo(new myslam::VisualOdometry());
+  myslam::VisualOdometry::Ptr vo = std::make_shared<myslam::VisualOdometry>();
 
   std::string dataset_dir = myslam::Config::get<std::string>("dataset_dir");
   std::cout << "Dataset: " << dataset_dir << std::endl;
@@ -61,7 +62,8 @@ int main(int argc, char** argv)
   }
   //std::cout << "Size of rgb: " << rgb_files.size() << " ; size of depth: " << depth_files.size() << std::endl;
 
-  myslam::Camera::Ptr camera(new myslam::Camera());
+  //myslam::Camera::Ptr camera(new myslam::Camera());
+  myslam::Camera::Ptr camera = std::make_shared<myslam::Camera>();
 
   // Visualization
   cv::viz::Viz3d vis("Visual Odometry");

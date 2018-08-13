@@ -5,7 +5,7 @@
   * @version: v0.0.1
   * @author: aliben.develop@gmail.com
   * @create_date: 2018-08-02 10:35:36
-  * @last_modified_date: 2018-08-13 17:25:50
+  * @last_modified_date: 2018-08-13 21:59:57
   * @brief: TODO
   * @details: TODO
   */
@@ -30,7 +30,7 @@ namespace myslam
     : status_(INITIALIZING),
       reference_frame_(nullptr),
       current_frame_(nullptr),
-      map_(new Map()),
+      map_(std::make_shared<Map>()),
       num_lost_(0),
       num_inliers_(0)
   {
