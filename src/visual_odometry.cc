@@ -5,7 +5,7 @@
   * @version: v0.0.1
   * @author: aliben.develop@gmail.com
   * @create_date: 2018-08-02 10:35:36
-  * @last_modified_date: 2018-08-13 10:18:45
+  * @last_modified_date: 2018-08-13 10:24:12
   * @brief: TODO
   * @details: TODO
   */
@@ -68,7 +68,8 @@ namespace myslam
           poseEstimationPnP();
           if( checkEstimatePose() == true )
           {
-            auto Tcw_current = T_curr_ref_estimated_*pFrame_reference_->get_Tcw();
+            //auto Tcw_reference = pFrame_reference_->get_Tcw();
+            auto Tcw_current = T_curr_ref_estimated_;
             //pFrame_current_->set_Tcw(T_curr_ref_estimated_ * pFrame_reference_->get_Tcw());
             pFrame_current_->set_Tcw(Tcw_current);
             pFrame_reference_ = pFrame_current_;
