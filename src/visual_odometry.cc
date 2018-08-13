@@ -5,7 +5,7 @@
   * @version: v0.0.1
   * @author: aliben.develop@gmail.com
   * @create_date: 2018-08-02 10:35:36
-  * @last_modified_date: 2018-08-13 11:05:20
+  * @last_modified_date: 2018-08-13 11:08:31
   * @brief: TODO
   * @details: TODO
   */
@@ -70,7 +70,9 @@ namespace myslam
           {
             auto Tcw_reference = pFrame_reference_->get_Tcw();
             auto Tcw_current = T_curr_ref_estimated_;
+            std::cout << "[Bebug] Before" << std::endl;
             pFrame_current_->set_Tcw(Tcw_current);
+            std::cout << "[Bebug] After" << std::endl;
             //pFrame_current_->set_Tcw(T_curr_ref_estimated_ * pFrame_reference_->get_Tcw());
             pFrame_reference_ = pFrame_current_;
             setRef3DPoints();
