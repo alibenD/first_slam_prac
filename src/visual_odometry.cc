@@ -5,7 +5,7 @@
   * @version: v0.0.1
   * @author: aliben.develop@gmail.com
   * @create_date: 2018-08-02 10:35:36
-  * @last_modified_date: 2018-08-13 15:36:32
+  * @last_modified_date: 2018-08-13 15:50:52
   * @brief: TODO
   * @details: TODO
   */
@@ -194,6 +194,7 @@ namespace myslam
 
     cv::Mat R;
     cv::Rodrigues(rvec, R);
+    std::cout << R << std::endl;
     Eigen::Matrix3d r;
     Eigen::Vector3d t;
     cv::cv2eigen(R, r);
