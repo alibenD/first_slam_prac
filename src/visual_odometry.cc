@@ -5,7 +5,7 @@
   * @version: v0.0.1
   * @author: aliben.develop@gmail.com
   * @create_date: 2018-08-02 10:35:36
-  * @last_modified_date: 2018-08-13 11:45:26
+  * @last_modified_date: 2018-08-13 12:17:21
   * @brief: TODO
   * @details: TODO
   */
@@ -194,15 +194,18 @@ namespace myslam
     cv::Mat R;
     cv::Rodrigues(rvec, R);
     Eigen::Matrix3d r;
+    Eigen::Vector3d t;
     cv::cv2eigen(R, r);
+    cv::cv2eigen(tvec, t);
 
-    Eigen::AngleAxisd angle(r);
-    Eigen::Quaterniond q(r);
+    //Eigen::AngleAxisd angle(r);
+    //Eigen::Quaterniond q(r);
     std::cout << "[Bebug] Before set_tcw_estimate" << std::endl;
     //T_curr_ref_estimated_ = Sophus::SE3<double>(Sophus::SO3<double>(q), Eigen::Vector3d(tvec.at<double>(0,0), tvec.at<double>(1,0), tvec.at<double>(2,0)));
-    auto tcre = Sophus::SE3<double>(Sophus::SO3<double>(q), Eigen::Vector3d(tvec.at<double>(0,0), tvec.at<double>(1,0), tvec.at<double>(2,0)));
+    T_curr_ref_estimated_ = Sophus::SE3<double>(r, t);
     std::cout << "[Bebug] After set_tcw_estimate" << std::endl;
-    setTransformationEstimation(tcre);
+    //std::cout << "Tcr: " << tcre << std::endl; 
+    //setTransformationEstimation(tcre);
     return 0;
   }
 
