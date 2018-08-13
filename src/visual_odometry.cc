@@ -5,7 +5,7 @@
   * @version: v0.0.1
   * @author: aliben.develop@gmail.com
   * @create_date: 2018-08-02 10:35:36
-  * @last_modified_date: 2018-08-13 11:19:55
+  * @last_modified_date: 2018-08-13 11:24:19
   * @brief: TODO
   * @details: TODO
   */
@@ -200,7 +200,7 @@ namespace myslam
     //T_curr_ref_estimated_ = Sophus::SE3<double>(Sophus::SO3<double>(q), Eigen::Vector3d(tvec.at<double>(0,0), tvec.at<double>(1,0), tvec.at<double>(2,0)));
     auto tcre = Sophus::SE3<double>(Sophus::SO3<double>(q), Eigen::Vector3d(tvec.at<double>(0,0), tvec.at<double>(1,0), tvec.at<double>(2,0)));
     std::cout << "[Bebug] After set_tcw_estimate" << std::endl;
-    T_curr_ref_estimated_ = tcre;
+    setTransformationEstimation(tcre);
     return 0;
   }
 

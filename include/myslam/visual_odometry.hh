@@ -7,7 +7,7 @@
   * @version: v0.0.1
   * @author: aliben.develop@gmail.com
   * @create_date: 2018-08-02 08:35:52
-  * @last_modified_date: 2018-08-12 21:46:59
+  * @last_modified_date: 2018-08-13 11:23:53
   * @brief: TODO
   * @details: TODO
   *-----------------------------------------------*/
@@ -76,6 +76,15 @@ namespace myslam
        */
       eVOStatus getStatus()
       { return status_; }
+
+      /**
+       * @brief Set the estimated transfomation from reference to current frame
+       */
+      int setTransformationEstimation(const Sophus::SE3<double> T_c_r_will_set)
+      {
+        T_curr_ref_estimated_ = T_c_r_will_set;
+        return 0;
+      }
 
     protected:
       int extractKeyPoints();
