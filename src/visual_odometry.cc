@@ -5,7 +5,7 @@
   * @version: v0.0.1
   * @author: aliben.develop@gmail.com
   * @create_date: 2018-08-02 10:35:36
-  * @last_modified_date: 2018-08-13 11:08:31
+  * @last_modified_date: 2018-08-13 11:14:24
   * @brief: TODO
   * @details: TODO
   */
@@ -31,6 +31,7 @@ namespace myslam
       pFrame_reference_(nullptr),
       pFrame_current_(nullptr),
       map_(std::make_shared<Map>()),
+      T_curr_ref_estimated_(),
       num_lost_(0),
       num_inliers_(0)
   {
