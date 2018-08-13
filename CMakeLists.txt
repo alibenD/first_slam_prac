@@ -4,7 +4,7 @@
 # @filename: CMakeLists.txt
 # @author: aliben.develop@gmail.com
 # @create_date: 2018-08-01 15:25:28
-# @last_modified_date: 2018-08-12 23:35:26
+# @last_modified_date: 2018-08-13 13:52:51
 # @description: TODO
 #---****************************************************************---
 
@@ -53,8 +53,8 @@ LINK_DIRECTORIES(${CMAKE_INSTALL_PREFIX}/lib)
   MESSAGE( STATUS "OpenCV Path: ${OpenCV_INCLUDE_DIRS}" )
 
   FIND_PACKAGE(Sophus REQUIRED)
-  INCLUDE_DIRECTORIES( ${Sophus_INCLUDE_DIRS} )
-  MESSAGE( STATUS "Sophus Path: ${Sophus_INCLUDE_DIRS}" )
+  INCLUDE_DIRECTORIES( ${SOPHUS_INCLUDE_DIRS} )
+  MESSAGE( STATUS "Sophus Path: ${SOPHUS_INCLUDE_DIRS}" )
 
   FIND_PACKAGE(G2O REQUIRED)
   INCLUDE_DIRECTORIES( ${G2O_INCLUDE_DIRS} )

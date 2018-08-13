@@ -5,7 +5,7 @@
   * @version: v0.0.1
   * @author: aliben.develop@gmail.com
   * @create_date: 2018-08-02 10:35:36
-  * @last_modified_date: 2018-08-13 12:17:21
+  * @last_modified_date: 2018-08-13 15:21:34
   * @brief: TODO
   * @details: TODO
   */
@@ -69,15 +69,16 @@ namespace myslam
           poseEstimationPnP();
           if( checkEstimatePose() == true )
           {
-            std::cout << "[Bebug] Before get_tcw" << std::endl;
-            auto Tcw_reference = pFrame_reference_->get_Tcw();
-            std::cout << "[Bebug] After get_tcw" << std::endl;
-            auto Tcw_current = T_curr_ref_estimated_;
-            std::cout << "[Bebug] Before set_tcw" << std::endl;
-            pFrame_current_->set_Tcw(Tcw_current);
-            std::cout << "[Bebug] After set_tcw" << std::endl;
-            //pFrame_current_->set_Tcw(T_curr_ref_estimated_ * pFrame_reference_->get_Tcw());
-            pFrame_reference_ = pFrame_current_;
+            //std::cout << "[Bebug] Before get_tcw" << std::endl;
+            //auto Tcw_reference = pFrame_reference_->get_Tcw();
+            //std::cout << "[Bebug] After get_tcw" << std::endl;
+            //auto Tcw_current = T_curr_ref_estimated_;
+
+            //std::cout << "[Bebug] Before set_tcw" << std::endl;
+            //pFrame_current_->set_Tcw(Tcw_current);
+            pFrame_current_->set_Tcw(T_curr_ref_estimated_ * pFrame_reference_->get_Tcw());
+            pFrame_reference_ = pFrame;
+            //std::cout << "[Bebug] After set_tcw" << std::endl;
             setRef3DPoints();
             num_lost_ = 0;
             if( checkKeyFrame() == true )
@@ -199,7 +200,7 @@ namespace myslam
     cv::cv2eigen(tvec, t);
 
     //Eigen::AngleAxisd angle(r);
-    //Eigen::Quaterniond q(r);
+    Eigen::Quaterniond q(r);
     std::cout << "[Bebug] Before set_tcw_estimate" << std::endl;
     //T_curr_ref_estimated_ = Sophus::SE3<double>(Sophus::SO3<double>(q), Eigen::Vector3d(tvec.at<double>(0,0), tvec.at<double>(1,0), tvec.at<double>(2,0)));
     T_curr_ref_estimated_ = Sophus::SE3<double>(r, t);
