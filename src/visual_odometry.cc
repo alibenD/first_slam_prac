@@ -5,7 +5,7 @@
   * @version: v0.0.1
   * @author: aliben.develop@gmail.com
   * @create_date: 2018-08-02 10:35:36
-  * @last_modified_date: 2018-08-13 16:30:17
+  * @last_modified_date: 2018-08-13 17:25:50
   * @brief: TODO
   * @details: TODO
   */
@@ -147,7 +147,7 @@ namespace myslam
         Sophus::Vector3d point_camera = reference_frame_->camera_->pixel2camera(Sophus::Vector2d(keypoints_curr_frame_[i].pt.x,keypoints_curr_frame_[i].pt.y), depth);
         point_ref_frame_.push_back(cv::Point3f(point_camera(0,0),
                                                point_camera(1,0),
-                                               point_camera(2.0)));
+                                               point_camera(2,0)));
         descriptors_ref_.push_back(descriptors_curr_.row(i));
       }
     }
