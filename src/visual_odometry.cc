@@ -5,7 +5,7 @@
   * @version: v0.0.1
   * @author: aliben.develop@gmail.com
   * @create_date: 2018-08-02 10:35:36
-  * @last_modified_date: 2018-08-13 11:14:24
+  * @last_modified_date: 2018-08-13 11:17:27
   * @brief: TODO
   * @details: TODO
   */
@@ -69,11 +69,13 @@ namespace myslam
           poseEstimationPnP();
           if( checkEstimatePose() == true )
           {
+            std::cout << "[Bebug] Before get_tcw" << std::endl;
             auto Tcw_reference = pFrame_reference_->get_Tcw();
+            std::cout << "[Bebug] After get_tcw" << std::endl;
             auto Tcw_current = T_curr_ref_estimated_;
-            std::cout << "[Bebug] Before" << std::endl;
+            std::cout << "[Bebug] Before set_tcw" << std::endl;
             pFrame_current_->set_Tcw(Tcw_current);
-            std::cout << "[Bebug] After" << std::endl;
+            std::cout << "[Bebug] After set_tcw" << std::endl;
             //pFrame_current_->set_Tcw(T_curr_ref_estimated_ * pFrame_reference_->get_Tcw());
             pFrame_reference_ = pFrame_current_;
             setRef3DPoints();
@@ -194,7 +196,9 @@ namespace myslam
 
     Eigen::AngleAxisd angle(r);
     Eigen::Quaterniond q(r);
+    std::cout << "[Bebug] Before set_tcw_estimate" << std::endl;
     T_curr_ref_estimated_ = Sophus::SE3<double>(Sophus::SO3<double>(q), Eigen::Vector3d(tvec.at<double>(0,0), tvec.at<double>(1,0), tvec.at<double>(2,0)));
+    std::cout << "[Bebug] After set_tcw_estimate" << std::endl;
     return 0;
   }
 
