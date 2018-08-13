@@ -5,7 +5,7 @@
   * @version: v0.0.1
   * @author: aliben.develop@gmail.com
   * @create_date: 2018-08-01 10:30:37
-  * @last_modified_date: 2018-08-07 15:42:56
+  * @last_modified_date: 2018-08-13 16:29:52
   * @brief: TODO
   * @details: TODO
   */
@@ -18,7 +18,7 @@ namespace myslam
 {
   Frame::Frame(long id,
                double timestamp,
-               Sophus::SE3<double> T_camera_world,
+               Sophus::SE3 T_camera_world,
                Camera::Ptr camera,
                cv::Mat color,
                cv::Mat depth)

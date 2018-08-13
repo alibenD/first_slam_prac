@@ -7,7 +7,7 @@
   * @version: v0.0.1
   * @author: aliben.develop@gmail.com
   * @create_date: 2018-08-02 08:35:52
-  * @last_modified_date: 2018-08-07 15:55:40
+  * @last_modified_date: 2018-08-13 16:29:06
   * @brief: TODO
   * @details: TODO
   *-----------------------------------------------*/
@@ -46,7 +46,7 @@ namespace myslam
       cv::Mat descriptors_ref_;       /**< Descriptor in reference frame */
       std::vector<cv::DMatch> feature_matches_;   /**< Features matched */
 
-      Sophus::SE3<double> T_curr_ref_estimated_;    /**< Estimation TF from ref to curr */
+      Sophus::SE3 T_curr_ref_estimated_;    /**< Estimation TF from ref to curr */
       int num_inliers_;   /**< The number of inlier features in ICP */
       int num_lost_;      /**< The number of lose times */
 

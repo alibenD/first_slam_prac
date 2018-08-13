@@ -7,7 +7,7 @@
   * @version: v0.0.1
   * @author: aliben.develop@gmail.com
   * @create_date: 2018-08-01 09:33:08
-  * @last_modified_date: 2018-08-03 10:59:42
+  * @last_modified_date: 2018-08-13 16:28:49
   * @brief: TODO
   * @details: TODO
   *-----------------------------------------------*/
@@ -49,7 +49,7 @@ namespace myslam
        */
       Frame(long id,
             double timestamp=0,
-            Sophus::SE3<double> T_camera_world=Sophus::SE3<double>(),
+            Sophus::SE3 T_camera_world=Sophus::SE3(),
             Camera::Ptr camera=nullptr,
             cv::Mat color=cv::Mat(),
             cv::Mat depth=cv::Mat());
@@ -100,7 +100,7 @@ namespace myslam
       /**
        * @brief Get the TF from world to camera coordinate
        */
-      inline Sophus::SE3<double>& get_Tcw()
+      inline Sophus::SE3& get_Tcw()
       { return T_camera_world_; }
 
       /**
@@ -157,7 +157,7 @@ namespace myslam
        * @brief Set a new TF from world to camera
        * @param[in] Tcw_will_set A new TF
        */
-      inline int set_Tcw(const Sophus::SE3<double>& Tcw_will_set)
+      inline int set_Tcw(const Sophus::SE3& Tcw_will_set)
       {
         T_camera_world_ = Tcw_will_set;
         return 0;
@@ -190,7 +190,7 @@ namespace myslam
     private:
       unsigned long id_;      /*!< The identification of this frame */
       double timestamp_;      /*!< The time when the frame was recorded */
-      Sophus::SE3<double> T_camera_world_; /*!< A transformation from world to camera */
+      Sophus::SE3 T_camera_world_; /*!< A transformation from world to camera */
       cv::Mat color_;         /*!< The BGR channels of this frame */
       cv::Mat depth_;         /*!< The depth_ channel of this frame */
   };

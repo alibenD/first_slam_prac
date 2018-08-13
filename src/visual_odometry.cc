@@ -5,7 +5,7 @@
   * @version: v0.0.1
   * @author: aliben.develop@gmail.com
   * @create_date: 2018-08-02 10:35:36
-  * @last_modified_date: 2018-08-08 10:04:56
+  * @last_modified_date: 2018-08-13 16:30:17
   * @brief: TODO
   * @details: TODO
   */
@@ -188,7 +188,7 @@ namespace myslam
 
     Eigen::AngleAxisd angle(r);
     Eigen::Quaterniond q(r);
-    T_curr_ref_estimated_ = Sophus::SE3<double>(Sophus::SO3<double>(q), Eigen::Vector3d(tvec.at<double>(0,0), tvec.at<double>(1,0), tvec.at<double>(2,0)));
+    T_curr_ref_estimated_ = Sophus::SE3(Sophus::SO3(q), Eigen::Vector3d(tvec.at<double>(0,0), tvec.at<double>(1,0), tvec.at<double>(2,0)));
     return 0;
   }
 
