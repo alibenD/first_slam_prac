@@ -25,17 +25,19 @@ namespace myslam
     : id_(id),
       timestamp_(timestamp),
       T_camera_world_(T_camera_world),
-      camera_(camera),
-      color_(color.clone()),
-      depth_(depth.clone())
+      camera_(camera)
+      //color_(color.clone()),
+      //depth_(depth.clone())
   {
+    color.copyTo(color_);
+    depth.copyTo(depth_);
   }
 
   Frame::Ptr Frame::createFrame()
   {
-    //static long factory_id = 0;
-    //return Frame::Ptr(new Frame(factory_id++));
     static unsigned long factory_id = 0;
+    //return Frame::Ptr(new Frame(factory_id++));
+    //return std::make_shared<Frame>(factory_id++);
     auto pFrame = std::make_shared<Frame>(factory_id);
     std::cout << "Frame ID: " << factory_id << std::endl;
     factory_id++;

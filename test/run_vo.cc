@@ -49,6 +49,10 @@ int main(int argc, char** argv)
         >> rgb_file
         >> depth_time
         >> depth_file;
+    //std::cout << "RGB time: " << rgb_time << std::endl
+    //          << "RGB file: " << rgb_file << std::endl
+    //          << "Depth time: " << depth_time << std::endl
+    //          << "Depth file: " << depth_file << std::endl;
 
     rgb_times.push_back( atof(rgb_time.c_str()) );
     depth_times.push_back( atof(depth_time.c_str()) );
@@ -60,7 +64,7 @@ int main(int argc, char** argv)
       break;
     }
   }
-  //std::cout << "Size of rgb: " << rgb_files.size() << " ; size of depth: " << depth_files.size() << std::endl;
+  std::cout << "Size of rgb: " << rgb_files.size() << " ; size of depth: " << depth_files.size() << std::endl;
 
   //myslam::Camera::Ptr camera(new myslam::Camera());
   myslam::Camera::Ptr camera = std::make_shared<myslam::Camera>();
@@ -87,11 +91,13 @@ int main(int argc, char** argv)
     {
       break;
     }
-    myslam::Frame::Ptr pFrame = myslam::Frame::createFrame();
+    //myslam::Frame::Ptr pFrame = myslam::Frame::createFrame();
+    auto pFrame = myslam::Frame::createFrame();
     pFrame->camera_ = camera;
     pFrame->set_color(color);
     pFrame->set_depth(depth);
     pFrame->set_timestamp(rgb_times[i]);
+    std::cout << "Frame created." << std::endl;
 
     boost::timer timer;
     vo->addFrame(pFrame);

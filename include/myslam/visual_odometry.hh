@@ -36,10 +36,10 @@ namespace myslam
     private:
       VOStatus status_;               /**< VO status */
       Map::Ptr map_;                  /**< A map pointer */
-      Frame::Ptr reference_frame_;    /**< A reference frame pointer */
-      Frame::Ptr current_frame_;      /**< A current frame pointer */
+      Frame::Ptr pFrame_reference_;    /**< A reference frame pointer */
+      Frame::Ptr pFrame_current_;      /**< A current frame pointer */
 
-      cv::Ptr<cv::ORB> orb_;          /**< A detector/computer of ORB */
+      cv::Ptr<cv::ORB> pOrb_;          /**< A detector/computer of ORB */
       std::vector<cv::Point3f> point_ref_frame_;        /**< 3D points in reference frame */
       std::vector<cv::KeyPoint> keypoints_curr_frame_;  /**< Keypoints in   */
       cv::Mat descriptors_curr_;      /**< Descriptor in current frame */
@@ -69,13 +69,22 @@ namespace myslam
        * @brief Add a new frame and check if it is a key frame
        * @param[in] frame A new frame from camera
        */
-      bool addFrame(const Frame::Ptr& frame);
+      bool addFrame(Frame::Ptr frame);
 
       /**
        * @brief Get the status of this VO
        */
       eVOStatus getStatus()
       { return status_; }
+
+      /**
+       * @brief Set the estimated transfomation from reference to current frame
+       */
+      int setTransformationEstimation(const Sophus::SE3<double> T_c_r_will_set)
+      {
+        T_curr_ref_estimated_ = T_c_r_will_set;
+        return 0;
+      }
 
     protected:
       int extractKeyPoints();

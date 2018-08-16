@@ -49,10 +49,13 @@ namespace myslam
        */
       Frame(long id,
             double timestamp=0,
-            Sophus::SE3 T_camera_world=Sophus::SE3(),
+            //Sophus::SE3<double> T_camera_world=Sophus::SE3<double>(Eigen::Quaterniond(Eigen::AngleAxisd(0, Eigen::Vector3d(0,0,1))), Eigen::Vector3d(0,0,0)),
+            Sophus::SE3<double> T_camera_world=Sophus::SE3<double>(),
             Camera::Ptr camera=nullptr,
             cv::Mat color=cv::Mat(),
             cv::Mat depth=cv::Mat());
+
+
       virtual ~Frame() = default;
 
       /**
@@ -100,8 +103,18 @@ namespace myslam
       /**
        * @brief Get the TF from world to camera coordinate
        */
-      inline Sophus::SE3& get_Tcw()
+      inline const Sophus::SE3<double>& get_Tcw()
       { return T_camera_world_; }
+
+      /**
+       * @brief Get the TF from world to camera coordinate
+       * @param[out] Tcw_will_get Transformation from world to camera
+       */
+      inline int get_Tcw(Sophus::SE3<double>& Tcw_will_get) const
+      {
+        Tcw_will_get = T_camera_world_;
+        return 0;
+      }
 
       /**
        * @brief Get the color channels of this frame
@@ -169,7 +182,8 @@ namespace myslam
        */
       inline int set_color(const cv::Mat& color_will_set)
       {
-        color_ = color_will_set.clone();
+        //color_ = color_will_set.clone();
+        color_will_set.copyTo(color_);
         return 0;
       }
 
@@ -179,7 +193,8 @@ namespace myslam
        */
       inline int set_depth(const cv::Mat& depth_will_set)
       {
-        depth_ = depth_will_set;
+        //depth_ = depth_will_set.clone();
+        depth_will_set.copyTo(depth_);
         return 0;
       }
 
