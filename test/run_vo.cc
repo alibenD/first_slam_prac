@@ -5,7 +5,7 @@
   * @version: v0.0.1
   * @author: aliben.develop@gmail.com
   * @create_date: 2018-08-03 09:11:14
-  * @last_modified_date: 2018-08-12 00:42:32
+  * @last_modified_date: 2018-08-13 22:00:56
   * @brief: TODO
   * @details: TODO
   */
@@ -107,12 +107,12 @@ int main(int argc, char** argv)
     {
       break;
     }
-    Sophus::SE3<double> T_w_c = pFrame->get_Tcw().inverse();
+    Sophus::SE3 T_w_c = pFrame->get_Tcw().inverse();
 
     cv::Affine3d M(cv::Affine3d::Mat3(
-                      T_w_c.rotationMatrix()(0,0), T_w_c.rotationMatrix()(0,1), T_w_c.rotationMatrix()(0,2),
-                      T_w_c.rotationMatrix()(1,0), T_w_c.rotationMatrix()(1,1), T_w_c.rotationMatrix()(1,2),
-                      T_w_c.rotationMatrix()(2,0), T_w_c.rotationMatrix()(2,1), T_w_c.rotationMatrix()(2,2)
+                      T_w_c.rotation_matrix()(0,0), T_w_c.rotation_matrix()(0,1), T_w_c.rotation_matrix()(0,2),
+                      T_w_c.rotation_matrix()(1,0), T_w_c.rotation_matrix()(1,1), T_w_c.rotation_matrix()(1,2),
+                      T_w_c.rotation_matrix()(2,0), T_w_c.rotation_matrix()(2,1), T_w_c.rotation_matrix()(2,2)
                       ),
                    cv::Affine3d::Vec3(T_w_c.translation()(0,0), T_w_c.translation()(1,0), T_w_c.translation()(2,0)));
     cv::imshow("Image", color);

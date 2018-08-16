@@ -5,7 +5,7 @@
   * @version: v0.0.1
   * @author: aliben.develop@gmail.com
   * @create_date: 2018-08-01 13:25:24
-  * @last_modified_date: 2018-08-11 23:32:55
+  * @last_modified_date: 2018-08-13 21:59:24
   * @brief: TODO
   * @details: TODO
   */
@@ -29,10 +29,11 @@ namespace myslam
 
   MapPoint::Ptr MapPoint::createMapPoint()
   {
-    static unsigned long factory_id = 0;
+    //static long factory_id = 0;
     //return MapPoint::Ptr(new MapPoint(factory_id++,
     //                                  Eigen::Vector3d(0,0,0),
     //                                  Eigen::Vector3d(0,0,0)));
+    static unsigned long factory_id = 0;
     return std::make_shared<MapPoint>(factory_id++,
                                       Eigen::Vector3d(0,0,0),
                                       Eigen::Vector3d(0,0,0));
