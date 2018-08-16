@@ -5,7 +5,7 @@
   * @version: v0.0.1
   * @author: aliben.develop@gmail.com
   * @create_date: 2018-08-02 10:35:36
-  * @last_modified_date: 2018-08-16 13:00:30
+  * @last_modified_date: 2018-08-16 13:51:49
   * @brief: TODO
   * @details: TODO
   */
@@ -13,6 +13,7 @@
 //INCLUDE
 #include <myslam/visual_odometry.hh>
 #include <myslam/config.hh>
+#include <myslam/g2o_types.hh>
 
 #include <Eigen/Core>
 #include <opencv2/core/eigen.hpp>
@@ -208,6 +209,42 @@ namespace myslam
     //std::cout << "[Bebug] After set_tcw_estimate" << std::endl;
     //std::cout << "Tcr: " << tcre << std::endl; 
     //setTransformationEstimation(tcre);
+
+    // Using g2o to optimize TF estimation
+    typedef g2o::BlockSolver<g2o::BlockSolverTraits<6,2>> Block;
+    //Block::LinearSolverType* linearSolver = new g2o::LinearSolverDense<Block::PoseMatrixType>();
+    //Block* solver_ptr = new Block(linearSolver);
+    auto linearSolver = g2o::make_unique<g2o::LinearSolverDense<Block::PoseMatrixType>>();
+    auto blockSolver = g2o::make_unique<Block>(std::move(linearSolver));
+    //g2o::OptimizationAlgorithmLevenberg* solver = new g2o::OptimizationAlgorithmLevenberg(solver_ptr);
+    g2o::OptimizationAlgorithmLevenberg* solver = new g2o::OptimizationAlgorithmLevenberg(std::move(blockSolver));
+    g2o::SparseOptimizer optimizer;
+    optimizer.setAlgorithm(solver);
+
+    g2o::VertexSE3Expmap* pose = new g2o::VertexSE3Expmap();
+    pose->setId(0);
+    pose->setEstimate(g2o::SE3Quat(T_curr_ref_estimated_.rotationMatrix(), T_curr_ref_estimated_.translation()));
+    optimizer.addVertex(pose);
+
+    // Edges
+    for(int i=0; i< inliers.rows; i++)
+    {
+      int index = inliers.at<int>(i,0);
+      //3D-2D
+      EdgeProjectXYZ2UVPoseOnly* edge = new EdgeProjectXYZ2UVPoseOnly();
+      edge->setId(i);
+      edge->setVertex(0, pose);
+      edge->camera_ = pFrame_current_->camera_.get();
+      edge->point_ = Eigen::Vector3d(points_3d[index].x, points_3d[index].y, points_3d[index].z);
+      edge->setMeasurement(Eigen::Vector2d(points_2d[index].x, points_2d[index].y));
+      edge->setInformation(Eigen::Matrix2d::Identity());
+      optimizer.addEdge(edge);
+    }
+
+    optimizer.initializeOptimization();
+    optimizer.optimize(10);
+
+    T_curr_ref_estimated_= Sophus::SE3<double>(pose->estimate().rotation(), pose->estimate().translation());
     return 0;
   }
 
