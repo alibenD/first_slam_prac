@@ -7,7 +7,7 @@
   * @version: v0.0.1
   * @author: aliben.develop@gmail.com
   * @create_date: 2018-08-01 09:33:08
-  * @last_modified_date: 2018-08-13 16:28:49
+  * @last_modified_date: 2018-08-16 12:30:22
   * @brief: TODO
   * @details: TODO
   *-----------------------------------------------*/
@@ -170,7 +170,7 @@ namespace myslam
        * @brief Set a new TF from world to camera
        * @param[in] Tcw_will_set A new TF
        */
-      inline int set_Tcw(const Sophus::SE3& Tcw_will_set)
+      inline int set_Tcw(const Sophus::SE3<double>& Tcw_will_set)
       {
         T_camera_world_ = Tcw_will_set;
         return 0;
@@ -205,7 +205,7 @@ namespace myslam
     private:
       unsigned long id_;      /*!< The identification of this frame */
       double timestamp_;      /*!< The time when the frame was recorded */
-      Sophus::SE3 T_camera_world_; /*!< A transformation from world to camera */
+      Sophus::SE3<double> T_camera_world_; /*!< A transformation from world to camera */
       cv::Mat color_;         /*!< The BGR channels of this frame */
       cv::Mat depth_;         /*!< The depth_ channel of this frame */
   };

@@ -7,7 +7,7 @@
   * @version: v0.0.1
   * @author: aliben.develop@gmail.com
   * @create_date: 2018-07-31 17:37:08
-  * @last_modified_date: 2018-08-13 16:29:17
+  * @last_modified_date: 2018-08-16 12:54:15
   * @brief: TODO
   * @details: TODO
   *-----------------------------------------------*/
@@ -15,7 +15,7 @@
 // Header include
 #include <Eigen/Core>
 #include <Eigen/Geometry>
-#include <sophus/se3.h>
+#include <sophus/se3.hpp>
 #include <opencv2/core/core.hpp>
 
 #include <vector>
