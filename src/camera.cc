@@ -4,7 +4,7 @@
   * @version: v0.0.1
   * @author: aliben.develop@gmail.com
   * @create_date: 2018-07-31 20:49:07
-  * @last_modified_date: 2018-08-13 16:29:34
+  * @last_modified_date: 2018-08-16 13:00:07
   * @brief: Definition of Camera class
   */
 
@@ -24,19 +24,19 @@ namespace myslam
     depth_scale_ = Config::get<float>("camera.depth_scale");
   }
 
-  Eigen::Vector3d Camera::world2camera(const Eigen::Vector3d& point_world, const Sophus::SE3& T_camera_world)
+  Eigen::Vector3d Camera::world2camera(const Eigen::Vector3d& point_world, const Sophus::SE3<double>& T_camera_world)
   {
     Eigen::Vector3d coor_point_camera = T_camera_world*point_world;
     return coor_point_camera;
   }
 
-  Eigen::Vector2d Camera::world2pixel(const Eigen::Vector3d& point_world, const Sophus::SE3& T_camera_world)
+  Eigen::Vector2d Camera::world2pixel(const Eigen::Vector3d& point_world, const Sophus::SE3<double>& T_camera_world)
   {
     Eigen::Vector2d coor_point_pixel = camera2pixel(T_camera_world*point_world);
     return coor_point_pixel;
   }
 
-  Eigen::Vector3d Camera::camera2world(const Eigen::Vector3d& point_camera, const Sophus::SE3& T_world_camera)
+  Eigen::Vector3d Camera::camera2world(const Eigen::Vector3d& point_camera, const Sophus::SE3<double>& T_world_camera)
   {
     Eigen::Vector3d coor_point_world = T_world_camera.inverse()*point_camera;
     return coor_point_world;
@@ -58,7 +58,7 @@ namespace myslam
     return coor_point_camera;
   }
 
-  Eigen::Vector3d Camera::pixel2world(const Eigen::Vector2d& point_pixel, const Sophus::SE3& T_camera_world, double depth)
+  Eigen::Vector3d Camera::pixel2world(const Eigen::Vector2d& point_pixel, const Sophus::SE3<double>& T_camera_world, double depth)
   {
     Eigen::Vector3d coor_point_world = camera2world( pixel2camera(point_pixel, depth), T_camera_world );
     return coor_point_world;
