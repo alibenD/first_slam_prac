@@ -7,7 +7,7 @@
   * @version: v0.0.1
   * @author: aliben.develop@gmail.com
   * @create_date: 2018-08-07 17:39:00
-  * @last_modified_date: 2018-08-08 08:50:37
+  * @last_modified_date: 2018-08-16 14:08:18
   * @brief: TODO
   * @details: TODO
   *-----------------------------------------------*/
@@ -28,27 +28,27 @@
 // Declaration
 namespace myslam
 {
-  class EdgeProjectXYZ2RGBD : public g20::BaseBinaryEdge<3, Eigen::vector3d, g2o::VectexSBAPointXYZ, g2o::VertexSE3Expmap>
-  {
-    public:
-      EIGEN_MAKE_ALIGNED_OPERATOR_NEW;
-      virtual void computeError();
-      virtual void linearizeOplus();
-      virtual bool read(std::istream& in){}
-      virtual bool write(std::ostream& out) const {}
-  }:
-
-  class EdgeProjectXYZ2RGBDPoseOnly : public g2o::BaseUnaryEdge<3. Eigen::Vector3d, g2o::VertexSE3Expmap>
+  class EdgeProjectXYZ2RGBD : public g2o::BaseBinaryEdge<3, Eigen::Vector3d, g2o::VertexSBAPointXYZ, g2o::VertexSE3Expmap>
   {
     public:
       EIGEN_MAKE_ALIGNED_OPERATOR_NEW
       virtual void computeError();
       virtual void linearizeOplus();
-      virtual bool read(std::istream& in) {}
-      virtual bool write(std::ostream& out) const {}
+      virtual bool read(std::istream& in){ return true; }
+      virtual bool write(std::ostream& out) const { return true; }
+  };
+
+  class EdgeProjectXYZ2RGBDPoseOnly : public g2o::BaseUnaryEdge<3, Eigen::Vector3d, g2o::VertexSE3Expmap>
+  {
+    public:
+      EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+      virtual void computeError();
+      virtual void linearizeOplus();
+      virtual bool read(std::istream& in) { return true; }
+      virtual bool write(std::ostream& out) const { return true; }
 
       Eigen::Vector3d point_;
-  }
+  };
 
   class EdgeProjectXYZ2UVPoseOnly : public g2o::BaseUnaryEdge<2, Eigen::Vector2d, g2o::VertexSE3Expmap>
   {
@@ -57,12 +57,12 @@ namespace myslam
 
       virtual void computeError();
       virtual void linearizeOplus();
-      virtual bool read(std::istream& in) {}
-      virtual bool write(std::ostream& os) const {}
+      virtual bool read(std::istream& in) { return true; }
+      virtual bool write(std::ostream& os) const { return true; }
 
       Eigen::Vector3d point_;
       Camera* camera_;
-  }
+  };
 }   // END od namespace myslam
 
 #endif // __G2O_TYPES_HH__
