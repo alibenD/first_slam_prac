@@ -5,7 +5,7 @@
   * @version: v0.0.1
   * @author: aliben.develop@gmail.com
   * @create_date: 2018-08-02 10:35:36
-  * @last_modified_date: 2018-08-17 16:21:36
+  * @last_modified_date: 2018-08-22 22:34:27
   * @brief: TODO
   * @details: TODO
   */
@@ -225,7 +225,7 @@ namespace myslam
     g2o::SparseOptimizer optimizer;
     optimizer.setAlgorithm(solver);
 
-    __strong g2o::VertexSE3Expmap* pose = new g2o::VertexSE3Expmap();
+    g2o::VertexSE3Expmap* pose = new g2o::VertexSE3Expmap();
     pose->setId(0);
     pose->setEstimate(g2o::SE3Quat(T_curr_ref_estimated_.rotationMatrix(), T_curr_ref_estimated_.translation()));
     optimizer.addVertex(pose);
