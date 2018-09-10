@@ -7,7 +7,7 @@
   * @version: v0.0.1
   * @author: aliben.develop@gmail.com
   * @create_date: 2018-08-01 09:47:05
-  * @last_modified_date: 2018-08-02 10:07:38
+  * @last_modified_date: 2018-08-24 08:21:02
   * @brief: TODO
   * @details: TODO
   *-----------------------------------------------*/
@@ -25,6 +25,7 @@ namespace myslam
   class MapPoint
   {
     public:
+      EIGEN_MAKE_ALIGNED_OPERATOR_NEW;
       typedef std::shared_ptr<MapPoint> Ptr;    /*!< A shared_pointer points MapPoint*/
       MapPoint() = default;
 

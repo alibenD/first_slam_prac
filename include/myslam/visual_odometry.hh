@@ -7,7 +7,7 @@
   * @version: v0.0.1
   * @author: aliben.develop@gmail.com
   * @create_date: 2018-08-02 08:35:52
-  * @last_modified_date: 2018-08-16 12:30:51
+  * @last_modified_date: 2018-09-10 13:57:24
   * @brief: TODO
   * @details: TODO
   *-----------------------------------------------*/
@@ -24,6 +24,7 @@ namespace myslam
   {
 
     public:
+      EIGEN_MAKE_ALIGNED_OPERATOR_NEW;
       typedef std::shared_ptr<VisualOdometry> Ptr;  /**< A share_pointer points VisualOdometry*/
       enum VOStatus
       {
@@ -69,7 +70,7 @@ namespace myslam
        * @brief Add a new frame and check if it is a key frame
        * @param[in] frame A new frame from camera
        */
-      bool addFrame(Frame::Ptr frame);
+      bool addFrame(const Frame::Ptr& frame);
 
       /**
        * @brief Get the status of this VO
@@ -80,7 +81,7 @@ namespace myslam
       /**
        * @brief Set the estimated transfomation from reference to current frame
        */
-      int setTransformationEstimation(const Sophus::SE3<double> T_c_r_will_set)
+      int setTransformationEstimation(const Sophus::SE3<double>& T_c_r_will_set)
       {
         T_curr_ref_estimated_ = T_c_r_will_set;
         return 0;

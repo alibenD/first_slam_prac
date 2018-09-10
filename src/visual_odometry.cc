@@ -5,7 +5,7 @@
   * @version: v0.0.1
   * @author: aliben.develop@gmail.com
   * @create_date: 2018-08-02 10:35:36
-  * @last_modified_date: 2018-08-22 22:46:19
+  * @last_modified_date: 2018-08-23 23:27:32
   * @brief: TODO
   * @details: TODO
   */
@@ -47,7 +47,7 @@ namespace myslam
     pOrb_ = cv::ORB::create( num_of_features_, scale_factor_, level_pyramid_ );
   }
 
-  bool VisualOdometry::addFrame(Frame::Ptr pFrame)
+  bool VisualOdometry::addFrame(const Frame::Ptr& pFrame)
   {
     switch( status_ )
     {
@@ -190,8 +190,8 @@ namespace myslam
                        0.99, inliers);
     num_inliers_ = inliers.rows;
     std::cout << "PnP inliers: " << num_inliers_ << std::endl;
-    std::cout << "rvec: " << rvec << std::endl;
-    std::cout << "tvec: " << tvec << std::endl;
+    //std::cout << "rvec: " << rvec << std::endl;
+    //std::cout << "tvec: " << tvec << std::endl;
 
     cv::Mat R;
     cv::Rodrigues(rvec, R);
@@ -210,9 +210,9 @@ namespace myslam
     //std::cout << "Tcr: " << tcre << std::endl; 
     //setTransformationEstimation(tcre);
     auto tmp_T = Sophus::SE3<double>(r, t);
-    std::cout << "q:\n" << q.coeffs() << std::endl;
-    std::cout << "t:\n" << t << std::endl;
-    std::cout << "tmp_T(TF):\n" << tmp_T.matrix() << std::endl;
+//    std::cout << "q:\n" << q.coeffs() << std::endl;
+//    std::cout << "t:\n" << t << std::endl;
+//    std::cout << "tmp_T(TF):\n" << tmp_T.matrix() << std::endl;
 
     // Using g2o to optimize TF estimation
     typedef g2o::BlockSolver<g2o::BlockSolverTraits<6,2>> Block;
@@ -230,27 +230,27 @@ namespace myslam
     pose->setEstimate(g2o::SE3Quat(T_curr_ref_estimated_.rotationMatrix(), T_curr_ref_estimated_.translation()));
     optimizer.addVertex(pose);
 
-    // Edges
-    for(int i=0; i< inliers.rows; i++)
-    {
-      int index = inliers.at<int>(i,0);
-      //3D-2D
-      EdgeProjectXYZ2UVPoseOnly* edge = new EdgeProjectXYZ2UVPoseOnly();
-      edge->setId(i);
-      edge->setVertex(0, pose);
-      edge->camera_ = pFrame_current_->camera_.get();
-      edge->point_ = Eigen::Vector3d(points_3d[index].x, points_3d[index].y, points_3d[index].z);
-      edge->setMeasurement(Eigen::Vector2d(points_2d[index].x, points_2d[index].y));
-      edge->setInformation(Eigen::Matrix2d::Identity());
-      optimizer.addEdge(edge);
-    }
-
-    optimizer.initializeOptimization();
-    optimizer.optimize(10);
-
-    T_curr_ref_estimated_= Sophus::SE3<double>(pose->estimate().rotation(), pose->estimate().translation());
-    T_curr_ref_estimated_.setQuaternion(pose->estimate().rotation());
-    T_curr_ref_estimated_.translation() = pose->estimate().translation();
+//    // Edges
+//    for(int i=0; i< inliers.rows; i++)
+//    {
+//      int index = inliers.at<int>(i,0);
+//      //3D-2D
+//      EdgeProjectXYZ2UVPoseOnly* edge = new EdgeProjectXYZ2UVPoseOnly();
+//      edge->setId(i);
+//      edge->setVertex(0, pose);
+//      edge->camera_ = pFrame_current_->camera_.get();
+//      edge->point_ = Eigen::Vector3d(points_3d[index].x, points_3d[index].y, points_3d[index].z);
+//      edge->setMeasurement(Eigen::Vector2d(points_2d[index].x, points_2d[index].y));
+//      edge->setInformation(Eigen::Matrix2d::Identity());
+//      optimizer.addEdge(edge);
+//    }
+//
+//    optimizer.initializeOptimization();
+//    optimizer.optimize(10);
+//
+//    T_curr_ref_estimated_= Sophus::SE3<double>(pose->estimate().rotation(), pose->estimate().translation());
+//    T_curr_ref_estimated_.setQuaternion(pose->estimate().rotation());
+//    T_curr_ref_estimated_.translation() = pose->estimate().translation();
     return 0;
   }
 

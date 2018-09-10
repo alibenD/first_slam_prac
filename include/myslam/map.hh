@@ -7,7 +7,7 @@
   * @version: v0.0.1
   * @author: aliben.develop@gmail.com
   * @create_date: 2018-08-01 10:08:31
-  * @last_modified_date: 2018-08-12 00:50:39
+  * @last_modified_date: 2018-08-23 22:44:54
   * @brief: TODO
   * @details: TODO
   *-----------------------------------------------*/
@@ -35,13 +35,13 @@ namespace myslam
        * @brief Insert a new key frame in this map
        * @param[in] frame A shared_pointer of a key frame
        */
-      int insertKeyFrame(Frame::Ptr pFrame);
+      int insertKeyFrame(const Frame::Ptr& pFrame);
 
       /**
        * @brief Insert a new map point in this map
        * @param[in] frame A shared_pointer of a MapPoint
        */
-      int insertMapPoint(MapPoint::Ptr map_point);
+      int insertMapPoint(const MapPoint::Ptr& map_point);
 
     public:
       typedef std::shared_ptr<Map> Ptr;   /*!< A datatype shared_pointer points Map*/

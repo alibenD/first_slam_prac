@@ -5,7 +5,7 @@
   * @version: v0.0.1
   * @author: aliben.develop@gmail.com
   * @create_date: 2018-08-03 09:11:14
-  * @last_modified_date: 2018-08-16 13:06:20
+  * @last_modified_date: 2018-08-23 23:22:39
   * @brief: TODO
   * @details: TODO
   */
@@ -103,22 +103,22 @@ int main(int argc, char** argv)
     vo->addFrame(pFrame);
     std::cout << "VO costs time: " << timer.elapsed() << std::endl;
 
-    if(vo->getStatus() == myslam::VisualOdometry::LOST)
-    {
-      break;
-    }
-    Sophus::SE3<double> T_w_c = pFrame->get_Tcw().inverse();
+    //if(vo->getStatus() == myslam::VisualOdometry::LOST)
+    //{
+    //  break;
+    //}
+    //Sophus::SE3<double> T_w_c = pFrame->get_Tcw().inverse();
 
-    cv::Affine3d M(cv::Affine3d::Mat3(
-                      T_w_c.rotationMatrix()(0,0), T_w_c.rotationMatrix()(0,1), T_w_c.rotationMatrix()(0,2),
-                      T_w_c.rotationMatrix()(1,0), T_w_c.rotationMatrix()(1,1), T_w_c.rotationMatrix()(1,2),
-                      T_w_c.rotationMatrix()(2,0), T_w_c.rotationMatrix()(2,1), T_w_c.rotationMatrix()(2,2)
-                      ),
-                   cv::Affine3d::Vec3(T_w_c.translation()(0,0), T_w_c.translation()(1,0), T_w_c.translation()(2,0)));
-    cv::imshow("Image", color);
-    cv::waitKey(1);
-    vis.setWidgetPose("Camera", M);
-    vis.spinOnce(1, false);
+    //cv::Affine3d M(cv::Affine3d::Mat3(
+    //                  T_w_c.rotationMatrix()(0,0), T_w_c.rotationMatrix()(0,1), T_w_c.rotationMatrix()(0,2),
+    //                  T_w_c.rotationMatrix()(1,0), T_w_c.rotationMatrix()(1,1), T_w_c.rotationMatrix()(1,2),
+    //                  T_w_c.rotationMatrix()(2,0), T_w_c.rotationMatrix()(2,1), T_w_c.rotationMatrix()(2,2)
+    //                  ),
+    //               cv::Affine3d::Vec3(T_w_c.translation()(0,0), T_w_c.translation()(1,0), T_w_c.translation()(2,0)));
+    //cv::imshow("Image", color);
+    //cv::waitKey(1);
+    //vis.setWidgetPose("Camera", M);
+    //vis.spinOnce(1, false);
   }
   return 0;
 }

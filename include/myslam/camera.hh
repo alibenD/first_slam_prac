@@ -6,7 +6,7 @@
   * @version: v0.0.1
   * @author: aliben.develop@gmail.com
   * @create_date: 2018-07-31 20:49:07
-  * @last_modified_date: 2018-08-16 12:29:33
+  * @last_modified_date: 2018-09-09 20:43:54
   * @brief: Declaration of Camera class
   */
 
@@ -33,6 +33,7 @@ namespace myslam
 class Camera
 {
   public:
+    EIGEN_MAKE_ALIGNED_OPERATOR_NEW;
     Camera();
 
     /**

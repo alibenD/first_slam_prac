@@ -7,7 +7,7 @@
   * @version: v0.0.1
   * @author: aliben.develop@gmail.com
   * @create_date: 2018-08-01 09:33:08
-  * @last_modified_date: 2018-08-16 12:30:22
+  * @last_modified_date: 2018-09-10 13:57:00
   * @brief: TODO
   * @details: TODO
   *-----------------------------------------------*/
@@ -35,6 +35,7 @@ namespace myslam
   class Frame
   {
     public:
+      EIGEN_MAKE_ALIGNED_OPERATOR_NEW;
       typedef std::shared_ptr<Frame> Ptr;   /*!< A datatype shared_pointer points Frame */
 
       Frame() = default;
