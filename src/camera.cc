@@ -4,24 +4,49 @@
   * @version: v0.0.1
   * @author: aliben.develop@gmail.com
   * @create_date: 2018-07-31 20:49:07
-  * @last_modified_date: 2018-08-16 13:00:07
+  * @last_modified_date: 2018-09-10 14:50:13
   * @brief: Definition of Camera class
   */
 
 //INCLUDE
 #include <myslam/camera.hh>
-#include <myslam/config.hh>
+//#include <myslam/config.hh>
 
 //CODE
 namespace myslam
 {
-  Camera::Camera()
+  std::ostream& operator<<(std::ostream& os, const Camera& camera)
   {
-    fx_ = Config::get<float>("camera.fx");
-    fy_ = Config::get<float>("camera.fy");
-    cx_ = Config::get<float>("camera.cx");
-    cy_ = Config::get<float>("camera.cy");
-    depth_scale_ = Config::get<float>("camera.depth_scale");
+    os << "Camera params:" << std::endl
+       << "Fx: " << camera.get_fx()
+       << "\tFy: " << camera.get_fy()
+       << "\tCx: " << camera.get_cx()
+       << "\tCy: " << camera.get_cy() << std::endl;
+    return os;
+  }
+  //Camera::Camera()
+  //{
+  //  fx_ = Config::get<float>("camera.fx");
+  //  fy_ = Config::get<float>("camera.fy");
+  //  cx_ = Config::get<float>("camera.cx");
+  //  cy_ = Config::get<float>("camera.cy");
+  //  depth_scale_ = Config::get<float>("camera.depth_scale");
+  //}
+  Camera::Camera(const std::string& config_path)
+  {
+    this->file_ = cv::FileStorage(config_path.c_str(), cv::FileStorage::READ);
+    if(this->file_.isOpened() == false)
+    {
+      std::cerr<< "parameter file " << config_path
+               << " does not exist." << std::endl;
+      this->file_.release();
+      exit(1);
+    }
+    this->fx_ = this->get<float>("camera.fx", *this);
+    this->fy_ = this->get<float>("camera.fy", *this);
+    this->cx_ = this->get<float>("camera.cx", *this);
+    this->cy_ = this->get<float>("camera.cy", *this);
+    this->depth_scale_ = this->get<float>("camera.depth_scale", *this);
   }
 
   Eigen::Vector3d Camera::world2camera(const Eigen::Vector3d& point_world, const Sophus::SE3<double>& T_camera_world)

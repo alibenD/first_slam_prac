@@ -6,12 +6,13 @@
   * @version: v0.0.1
   * @author: aliben.develop@gmail.com
   * @create_date: 2018-07-31 20:49:07
-  * @last_modified_date: 2018-08-16 12:29:33
+  * @last_modified_date: 2018-09-10 14:49:09
   * @brief: Declaration of Camera class
   */
 
 // Header include
 #include <myslam/common.hh>
+#include <string>
 
 // Declaration
 
@@ -33,8 +34,9 @@ namespace myslam
 class Camera
 {
   public:
-    Camera();
+    Camera() = default;
 
+    Camera(const std::string& config_path);
     /**
      * @brief A constructor with camera parameter
      * @param[in] fx Focal distance by Alpha(x axis)
@@ -52,6 +54,7 @@ class Camera
         depth_scale_(depth_scale)
     {};
     virtual ~Camera() = default;
+    friend std::ostream& operator<<(std::ostream& os, const Camera& camera);
 
     // TF functions: world, camera, pixel
 
@@ -151,12 +154,25 @@ class Camera
   public:
     typedef std::shared_ptr<Camera> Ptr;    /*!< A shared_pointer points Camera*/
 
+  protected:
+    /**
+     * @brief A template static function for getting different type of setting items
+     * @param[in] key The key of an item
+     * @return The value of this item
+     */
+    template<typename T>
+      static T get(const std::string& key, const Camera& camera)
+      {
+        return T( camera.file_[key] );
+      }
+
   private:
     float fx_;  /*!< Focal distance by alpha(x axis direction)*/
     float fy_;  /*!< Focal distance by beta(y axis direction)*/
     float cx_;  /*!< Coordinates of optic center(x)*/
     float cy_;  /*!< Coordinates of optic center(y)*/
     float depth_scale_; /*!< Scale of depth */
+    cv::FileStorage file_;
 };
 
 }   // END of namespace myslam
