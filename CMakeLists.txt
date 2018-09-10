@@ -4,7 +4,7 @@
 # @filename: CMakeLists.txt
 # @author: aliben.develop@gmail.com
 # @create_date: 2018-08-01 15:25:28
-# @last_modified_date: 2018-08-14 08:22:34
+# @last_modified_date: 2018-09-10 14:18:22
 # @description: TODO
 #---****************************************************************---
 
@@ -73,6 +73,7 @@ LINK_DIRECTORIES(${CMAKE_INSTALL_PREFIX}/lib)
   include_directories( ${PROJECT_SOURCE_DIR}/include )
   add_subdirectory(src)
   add_subdirectory(test)
+  add_subdirectory(examples)
 
 # TARGET LINK
   # Example: target_link_libraries( EXEC_NAME LIBPATH ) ...LIB_PATH e.g. ${OPENCV_LIBS}
