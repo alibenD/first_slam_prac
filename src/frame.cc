@@ -5,7 +5,7 @@
   * @version: v0.0.1
   * @author: aliben.develop@gmail.com
   * @create_date: 2018-08-01 10:30:37
-  * @last_modified_date: 2018-08-16 12:59:16
+  * @last_modified_date: 2018-09-10 16:59:49
   * @brief: TODO
   * @details: TODO
   */
@@ -16,6 +16,15 @@
 //CODE
 namespace myslam
 {
+  unsigned long Frame::factory_id_ = 1;
+  std::ostream& operator<< (std::ostream& os, const Frame& frame)
+  {
+    os << "Frame ID: " << frame.get_id()
+       << "\t Timestamp: " << frame.get_timestamp() << std::endl
+       //<< "Pose(SE3): " << frame.get_Tcw()
+       << std::endl;
+    return os;
+  }
   Frame::Frame(long id,
                double timestamp,
                Sophus::SE3<double> T_camera_world,
@@ -35,12 +44,30 @@ namespace myslam
 
   Frame::Ptr Frame::createFrame()
   {
-    static unsigned long factory_id = 0;
     //return Frame::Ptr(new Frame(factory_id++));
     //return std::make_shared<Frame>(factory_id++);
-    auto pFrame = std::make_shared<Frame>(factory_id);
-    std::cout << "Frame ID: " << factory_id << std::endl;
-    factory_id++;
+    auto pFrame = std::make_shared<Frame>(Frame::factory_id_);
+    auto now = std::chrono::system_clock::now();
+    auto t = std::chrono::duration_cast<std::chrono::nanoseconds>(now.time_since_epoch()).count();
+    pFrame->set_timestamp(t);
+    std::cout << "Frame ID: " << Frame::factory_id_ << std::endl;
+    Frame::factory_id_++;
+    return pFrame;
+  }
+
+  Frame::Ptr Frame::createFrame(const cv::Mat& image, const Camera::Ptr& p_camera, double timestamp)
+  {
+    auto pFrame = std::make_shared<Frame>(Frame::factory_id_);
+    pFrame->set_color(image);
+    pFrame->camera_ = p_camera;
+    if(timestamp == 0)
+    {
+      auto now = std::chrono::system_clock::now();
+      timestamp= std::chrono::duration_cast<std::chrono::nanoseconds>(now.time_since_epoch()).count();
+    }
+    pFrame->set_timestamp(timestamp);
+    std::cout << "Frame ID: " << Frame::factory_id_ << std::endl;
+    Frame::factory_id_++;
     return pFrame;
   }
 

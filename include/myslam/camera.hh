@@ -6,7 +6,7 @@
   * @version: v0.0.1
   * @author: aliben.develop@gmail.com
   * @create_date: 2018-07-31 20:49:07
-  * @last_modified_date: 2018-09-10 14:49:09
+  * @last_modified_date: 2018-09-10 15:43:31
   * @brief: Declaration of Camera class
   */
 
@@ -150,11 +150,6 @@ class Camera
     inline float get_depth_scale() const
     { return depth_scale_; }
 
-
-  public:
-    typedef std::shared_ptr<Camera> Ptr;    /*!< A shared_pointer points Camera*/
-
-  protected:
     /**
      * @brief A template static function for getting different type of setting items
      * @param[in] key The key of an item
@@ -165,6 +160,11 @@ class Camera
       {
         return T( camera.file_[key] );
       }
+
+  public:
+    typedef std::shared_ptr<Camera> Ptr;    /*!< A shared_pointer points Camera*/
+
+  protected:
 
   private:
     float fx_;  /*!< Focal distance by alpha(x axis direction)*/

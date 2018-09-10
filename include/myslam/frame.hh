@@ -7,7 +7,7 @@
   * @version: v0.0.1
   * @author: aliben.develop@gmail.com
   * @create_date: 2018-08-01 09:33:08
-  * @last_modified_date: 2018-08-16 12:30:22
+  * @last_modified_date: 2018-09-10 16:21:47
   * @brief: TODO
   * @details: TODO
   *-----------------------------------------------*/
@@ -15,6 +15,8 @@
 // Header include
 #include <myslam/common.hh>
 #include <myslam/camera.hh>
+#include <chrono>
+#include <ctime>
 
 /**
  * @defgroup DataType
@@ -28,6 +30,11 @@
 // Declaration
 namespace myslam
 {
+
+  using SysCLK = std::chrono::system_clock::time_point;
+  using TimeNsec = std::chrono::time_point<std::chrono::system_clock, std::chrono::nanoseconds>;
+  using NanoSecond = std::chrono::nanoseconds;
+
   /**
    * @ingroup DataType
    * @brief A class restoring frame from camera
@@ -35,6 +42,8 @@ namespace myslam
   class Frame
   {
     public:
+      EIGEN_MAKE_ALIGNED_OPERATOR_NEW;
+      friend std::ostream& operator<<(std::ostream& os, const Frame& frame);
       typedef std::shared_ptr<Frame> Ptr;   /*!< A datatype shared_pointer points Frame */
 
       Frame() = default;
@@ -63,6 +72,12 @@ namespace myslam
        * @return a shared_pointer pointed this new instance of Frame
        */
       static Frame::Ptr createFrame();
+
+      /**
+       * @brief Create a new frame(on heap memory) and return a shared_pointer
+       * @return a shared_pointer pointed this new instance of Frame
+       */
+      static Frame::Ptr createFrame(const cv::Mat& image, const Camera::Ptr& p_camera, double timestamp = 0);
 
       /**
        * @brief Given a key_point, estimate the depth of this key_point
@@ -201,6 +216,7 @@ namespace myslam
 
     public:
       Camera::Ptr camera_;    /*!< A datatype shared_pointer point Camera */
+      static unsigned long factory_id_;
 
     private:
       unsigned long id_;      /*!< The identification of this frame */
