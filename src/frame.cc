@@ -5,7 +5,7 @@
   * @version: v0.0.1
   * @author: aliben.develop@gmail.com
   * @create_date: 2018-08-01 10:30:37
-  * @last_modified_date: 2018-09-10 16:59:49
+  * @last_modified_date: 2018-09-10 17:11:18
   * @brief: TODO
   * @details: TODO
   */
@@ -21,7 +21,7 @@ namespace myslam
   {
     os << "Frame ID: " << frame.get_id()
        << "\t Timestamp: " << frame.get_timestamp() << std::endl
-       //<< "Pose(SE3): " << frame.get_Tcw()
+       << "Pose(SE3):\n" << frame.get_Tcw().matrix()
        << std::endl;
     return os;
   }

@@ -4,7 +4,7 @@
   * @version: v0.0.1
   * @author: aliben.develop@gmail.com
   * @create_date: 2018-07-31 20:49:07
-  * @last_modified_date: 2018-09-10 14:50:13
+  * @last_modified_date: 2018-09-11 09:38:47
   * @brief: Definition of Camera class
   */
 
@@ -18,10 +18,11 @@ namespace myslam
   std::ostream& operator<<(std::ostream& os, const Camera& camera)
   {
     os << "Camera params:" << std::endl
-       << "Fx: " << camera.get_fx()
-       << "\tFy: " << camera.get_fy()
-       << "\tCx: " << camera.get_cx()
-       << "\tCy: " << camera.get_cy() << std::endl;
+       << camera.intrinsic_ << std::endl;
+       //<< "Fx: " << camera.get_fx()
+       //<< "\tFy: " << camera.get_fy()
+       //<< "\tCx: " << camera.get_cx()
+       //<< "\tCy: " << camera.get_cy() << std::endl;
     return os;
   }
   //Camera::Camera()
@@ -47,6 +48,10 @@ namespace myslam
     this->cx_ = this->get<float>("camera.cx", *this);
     this->cy_ = this->get<float>("camera.cy", *this);
     this->depth_scale_ = this->get<float>("camera.depth_scale", *this);
+
+    intrinsic_ = (cv::Mat_<double>(3,3)  << fx_,  0,   cx_,
+                                              0,  fy_, cy_,
+                                              0,  0,   1);
   }
 
   Eigen::Vector3d Camera::world2camera(const Eigen::Vector3d& point_world, const Sophus::SE3<double>& T_camera_world)
