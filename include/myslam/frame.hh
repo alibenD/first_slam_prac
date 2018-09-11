@@ -7,7 +7,7 @@
   * @version: v0.0.1
   * @author: aliben.develop@gmail.com
   * @create_date: 2018-08-01 09:33:08
-  * @last_modified_date: 2018-09-10 16:21:47
+  * @last_modified_date: 2018-09-10 18:36:29
   * @brief: TODO
   * @details: TODO
   *-----------------------------------------------*/
@@ -118,7 +118,7 @@ namespace myslam
       /**
        * @brief Get the TF from world to camera coordinate
        */
-      inline const Sophus::SE3<double>& get_Tcw()
+      inline const Sophus::SE3<double>& get_Tcw() const
       { return T_camera_world_; }
 
       /**
@@ -158,6 +158,42 @@ namespace myslam
       {
         depth_will_get = depth_;
         return 0;
+      }
+
+      /**
+       * @brief Get descriptor
+       * @param[in] descriptor_will_get
+       */
+      inline int get_descriptor(cv::Mat& descriptor_will_get) const
+      {
+        descriptor_will_get = descriptor_;
+        return 0;
+      }
+
+      /**
+       * @brief Get keypoint
+       * @param[in] keypoint_will_get
+       */
+      inline int get_keypoint(std::vector<cv::KeyPoint>& keypoint_will_get)
+      {
+        keypoint_will_get = keypoints_;
+        return 0;
+      }
+
+      /**
+       * @brief Get descriptor
+       */
+      inline const cv::Mat& get_descriptor() const
+      {
+        return descriptor_;
+      }
+
+      /**
+       * @brief Get keypoint
+       */
+      inline std::vector<cv::KeyPoint>& get_keypoint()
+      {
+        return keypoints_;
       }
 
       // Set methods
@@ -213,6 +249,27 @@ namespace myslam
         return 0;
       }
 
+      /**
+       * @brief Set keypoint
+       * @param[in] keypoint_will_be_set
+       */
+      inline int set_keypoint(const std::vector<cv::KeyPoint>& keypoint_will_be_set)
+      {
+        keypoints_ = keypoint_will_be_set;
+        return 0;
+      }
+
+      /**
+       * @brief Set descriptor
+       * @param[in] descriptor_will_be_set
+       */
+      inline int set_descriptor(const cv::Mat& descriptor_will_be_set)
+      {
+        //descriptor_will_be_set.copyTo(descriptor_);
+        descriptor_ = descriptor_will_be_set.clone();
+        return 0;
+      }
+
 
     public:
       Camera::Ptr camera_;    /*!< A datatype shared_pointer point Camera */
@@ -224,6 +281,8 @@ namespace myslam
       Sophus::SE3<double> T_camera_world_; /*!< A transformation from world to camera */
       cv::Mat color_;         /*!< The BGR channels of this frame */
       cv::Mat depth_;         /*!< The depth_ channel of this frame */
+      cv::Mat descriptor_;
+      std::vector<cv::KeyPoint> keypoints_;
   };
 
 }   // END of namespace myslam
