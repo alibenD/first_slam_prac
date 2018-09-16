@@ -4,7 +4,7 @@
 # @filename: CMakeLists.txt
 # @author: aliben.develop@gmail.com
 # @create_date: 2018-08-01 15:25:28
-# @last_modified_date: 2018-09-10 14:18:22
+# @last_modified_date: 2018-09-13 09:45:38
 # @description: TODO
 #---****************************************************************---
 
@@ -46,24 +46,28 @@ LINK_DIRECTORIES(${CMAKE_INSTALL_PREFIX}/lib)
 # Set Dependence PATH
   # Example: set ( PACKAGE_DIR PATH )
   FIND_PACKAGE(Eigen3 REQUIRED)
-  include_directories( ${EIGEN3_INCLUDE_DIRS} )
-  MESSAGE(STATUS ${EIGEN3_INCLUDE_DIRS})
   FIND_PACKAGE(OpenCV REQUIRED)
-  INCLUDE_DIRECTORIES( ${OpenCV_INCLUDE_DIRS} )
-  MESSAGE( STATUS "OpenCV Path: ${OpenCV_INCLUDE_DIRS}" )
-
-  FIND_PACKAGE(Sophus REQUIRED)
-  INCLUDE_DIRECTORIES( ${SOPHUS_INCLUDE_DIRS} )
-  MESSAGE( STATUS "Sophus Path: ${SOPHUS_INCLUDE_DIRS}" )
-
   FIND_PACKAGE(G2O REQUIRED)
-  INCLUDE_DIRECTORIES( ${G2O_INCLUDE_DIRS} )
+  FIND_PACKAGE(Sophus REQUIRED)
+  FIND_PACKAGE( Cholmod )
+
+  MESSAGE( STATUS "OpenCV Path: ${OpenCV_INCLUDE_DIRS}" )
+  MESSAGE( STATUS "Sophus Path: ${SOPHUS_INCLUDE_DIRS}" )
+  MESSAGE(STATUS "Eigen Path: ${EIGEN3_INCLUDE_DIRS}")
   MESSAGE( STATUS "G2O Path: ${G2O_INCLUDE_DIRS}")
+
+  INCLUDE_DIRECTORIES( ${SOPHUS_INCLUDE_DIRS} )
+  INCLUDE_DIRECTORIES( ${EIGEN3_INCLUDE_DIRS} )
+  INCLUDE_DIRECTORIES( ${OpenCV_INCLUDE_DIRS} )
+  INCLUDE_DIRECTORIES( ${G2O_INCLUDE_DIRS} )
+  INCLUDE_DIRECTORIES( ${CHOLMOD_INCLUDE_DIR} )
 
   SET( THIRD_PARTY_LIBS
     ${OpenCV_LIBS}
     ${Sophus_LIBRARIES}
-    g2o_core g2o_stuff g2o_types_sba)
+    #${G2O_LIBS}
+    ${CHOLMOD_LIBRARIES}
+    g2o_core g2o_types_slam3d g2o_solver_csparse g2o_stuff g2o_csparse_extension g2o_types_sba)
 
 # Find *Config.cmake
   # Example: find_package(OpenCV REQUIRED)

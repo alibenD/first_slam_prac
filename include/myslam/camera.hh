@@ -6,7 +6,7 @@
   * @version: v0.0.1
   * @author: aliben.develop@gmail.com
   * @create_date: 2018-07-31 20:49:07
-  * @last_modified_date: 2018-09-11 10:40:09
+  * @last_modified_date: 2018-09-14 09:30:06
   * @brief: Declaration of Camera class
   */
 
@@ -153,7 +153,7 @@ class Camera
     /**
      * @brief Get the matrix of intrinsic
      */
-    inline const cv::Mat& get_intrinsic() const
+    inline cv::Mat get_intrinsic() const
     { return intrinsic_; }
 
     /**

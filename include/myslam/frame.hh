@@ -7,7 +7,7 @@
   * @version: v0.0.1
   * @author: aliben.develop@gmail.com
   * @create_date: 2018-08-01 09:33:08
-  * @last_modified_date: 2018-09-10 18:36:29
+  * @last_modified_date: 2018-09-14 09:17:48
   * @brief: TODO
   * @details: TODO
   *-----------------------------------------------*/
@@ -270,6 +270,27 @@ namespace myslam
         return 0;
       }
 
+      inline int set_point3d(const std::vector<cv::Point3f>& point3d_will_be_set)
+      {
+        point3d_ = point3d_will_be_set;
+        return 0;
+      }
+
+      inline int set_point2d(const std::vector<cv::Point2f>& point2d_will_be_set)
+      {
+        point2d_ = point2d_will_be_set;
+        return 0;
+      }
+
+      inline const std::vector<cv::Point3f>& get_point3d() const
+      {
+        return point3d_;
+      }
+
+      inline const std::vector<cv::Point2f>& get_point2d() const
+      {
+        return point2d_;
+      }
 
     public:
       Camera::Ptr camera_;    /*!< A datatype shared_pointer point Camera */
@@ -283,6 +304,8 @@ namespace myslam
       cv::Mat depth_;         /*!< The depth_ channel of this frame */
       cv::Mat descriptor_;
       std::vector<cv::KeyPoint> keypoints_;
+      std::vector<cv::Point2f> point2d_;
+      std::vector<cv::Point3f> point3d_;
   };
 
 }   // END of namespace myslam
